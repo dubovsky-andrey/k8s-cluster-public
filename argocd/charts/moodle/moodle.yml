@@ -1,0 +1,90 @@
+# PV Moodle
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: moodle-pv 
+  labels:
+    type: nfs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /volume1/nfs/k8s-data/moodle/moodle
+    server: 192.168.1.20 
+
+
+# PVC Moodle
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: moodle-pvc
+  namespace: test
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-storage
+
+
+# Deployment Moodle
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodle
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moodle
+  template:
+    metadata:
+      labels:
+        app: moodle
+    spec:
+      containers:
+      - name: moodle
+        image: bitnami/moodle:latest
+        envFrom:
+        - configMapRef:
+            name: moodle-config
+        ports:
+        - containerPort: 8080
+        - containerPort: 8443
+        volumeMounts:
+        - name: moodle-storage
+          mountPath: /bitnami/moodle
+      volumes:
+      - name: moodle-storage
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+
+# Service Moodle
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moodle
+  namespace: test
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    nodePort: 30080
+  - name: https
+    port: 8443
+    targetPort: 8443
+    nodePort: 30443
+  selector:
+    app: moodle

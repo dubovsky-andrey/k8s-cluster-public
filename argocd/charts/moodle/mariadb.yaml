@@ -1,0 +1,80 @@
+# PV MariaDB
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb-moodle-pv 
+  labels:
+    type: nfs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /volume1/nfs/k8s-data/moodle/mariadb 
+    server: 192.168.1.20 
+
+# PVC MariaDB
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pvc
+  namespace: test
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-storage
+
+# Deployment MariaDB
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: bitnami/mariadb:latest
+        envFrom:
+        - configMapRef:
+            name: mariadb-config
+        volumeMounts:
+        - name: mariadb-storage
+          mountPath: /bitnami/mariadb
+      volumes:
+      - name: mariadb-storage
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+
+# Service MariaDB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+  namespace: test
+spec:
+  type: NodePort
+  ports:
+  - port: 3306
+    targetPort: 3306
+    nodePort: 30080
+  selector:
+    app: mariadb
