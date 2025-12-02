@@ -2,11 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: csi-driver-smb
-  namespace: argocd
+  namespace: system
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
-  project: default
+  project: system
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
