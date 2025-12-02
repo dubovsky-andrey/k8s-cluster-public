@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
       - name: mariadb
-        image: bitnami/mariadb@sha256:ff7add98b38d4f2fe85ced293811e4300c1c15d50852b5092ca0d980462f7e4f
+        image: bitnami/mariadb:sha256-ff7add98b38d4f2fe85ced293811e4300c1c15d50852b5092ca0d980462f7e4f
         envFrom:
         - configMapRef:
             name: mariadb-config
