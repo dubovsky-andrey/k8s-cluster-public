@@ -24,7 +24,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: moodle-pvc
-  namespace: test
+  namespace: dev
 spec:
   accessModes:
     - ReadWriteMany
@@ -40,7 +40,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: moodle
-  namespace: test
+  namespace: dev
 spec:
   replicas: 1
   selector:
@@ -74,7 +74,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: moodle
-  namespace: test
+  namespace: dev
 spec:
   type: NodePort
   ports:
