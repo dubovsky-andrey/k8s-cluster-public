@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: moodle
-        image: bitnami/moodle:latest
+        image: bitnamilegacy/moodle
         envFrom:
         - configMapRef:
             name: moodle-config
