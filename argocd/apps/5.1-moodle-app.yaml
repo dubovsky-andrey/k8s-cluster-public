@@ -13,7 +13,7 @@ spec:
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
-    namespace: media
+    namespace: dev
   syncPolicy:
     automated:
       prune: true
