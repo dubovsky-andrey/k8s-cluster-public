@@ -4,6 +4,8 @@ metadata:
   name: argocd-server-svc
   namespace: argocd
 spec:
+  selector:
+    app.kubernetes.io/name: argocd-server
   type: NodePort
   ports:
     - name: https
