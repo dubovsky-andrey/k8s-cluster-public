@@ -1,5 +1,5 @@
 # PV Moodle
----
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -66,7 +66,7 @@ spec:
       volumes:
       - name: moodle-storage
         persistentVolumeClaim:
-          claimName: mariadb-pvc
+          claimName: moodle-pvc
 
 # Service Moodle
 ---
