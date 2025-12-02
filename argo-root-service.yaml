@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "argocd-root-service"
+  namespace: "argocd"
+  finalizers:
+    - argocd.argoproj.io/resources-finalizer
+spec:
+  project: default
+  source:
+    repoURL: "git@github.com:dubovsky-andrey/k8s-cluster-public.git"
+    path: "argocd/apps"
+    targetRevision: "main"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: "argocd"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
