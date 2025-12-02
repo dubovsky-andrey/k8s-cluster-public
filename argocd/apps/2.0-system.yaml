@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: system
+  namespace: argocd
+spec:
+  description: System-level addons managed via ArgoCD
+
+  sourceRepos:
+    - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+
+  destinations:
+    - namespace: system
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
