@@ -11,3 +11,10 @@ metadata:
   name: dev
 spec: {}
 status: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system
+spec: {}
+status: {}
