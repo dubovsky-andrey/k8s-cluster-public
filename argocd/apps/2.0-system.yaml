@@ -8,9 +8,12 @@ spec:
 
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
 
   destinations:
-    - namespace: system
+    - namespace: kube-system
+      server: https://kubernetes.default.svc
+    - namespace: argocd
       server: https://kubernetes.default.svc
 
   clusterResourceWhitelist:
