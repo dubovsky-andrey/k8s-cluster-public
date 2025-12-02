@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: system
-  namespace: system
+  namespace: argocd
 spec:
   description: System-level addons managed via ArgoCD
 
