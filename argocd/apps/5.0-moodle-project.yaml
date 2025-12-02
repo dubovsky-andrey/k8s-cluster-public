@@ -7,7 +7,7 @@ spec:
   description: System-level addons managed via ArgoCD
 
   sourceRepos:
-    - git@github.com:dubovsky-andrey/k8s-cluster-public.git
+    - https://github.com/dubovsky-andrey/k8s-cluster-public.git
 
   destinations:
     - namespace: dev
