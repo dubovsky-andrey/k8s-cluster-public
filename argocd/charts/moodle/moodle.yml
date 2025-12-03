@@ -55,6 +55,7 @@ spec:
       containers:
       - name: moodle
         image: bitnamilegacy/moodle
+        command: ["sleep", "infinity"]
         envFrom:
         - configMapRef:
             name: moodle-config
