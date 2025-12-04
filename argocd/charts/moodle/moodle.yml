@@ -61,6 +61,13 @@ spec:
         ports:
         - containerPort: 8080
         - containerPort: 8443
+        volumeMounts:
+        - name: moodle-storage
+          mountPath: /bitnami/moodle
+      volumes:
+      - name: moodle-storage
+        persistentVolumeClaim:
+          claimName: moodle-pvc
         livenessProbe:
           tcpSocket:
             port: 8080
@@ -71,6 +78,13 @@ spec:
             port: 8080
           initialDelaySeconds: 30
           periodSeconds: 10
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "2Gi"
 # Service Moodle
 ---
 apiVersion: v1
