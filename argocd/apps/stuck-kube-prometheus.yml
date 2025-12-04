@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: "75.18.1"
+    helm:
+      values: |
+        crds:
+          enabled: true
+        grafana:
+          adminPassword: admin
+          service:
+            type: NodePort
+            nodePort: 30008
+        prometheus:
+          service:
+            type: NodePort
+            nodePort: 30020
+          prometheusSpec:
+            serviceMonitorSelector: {}
+            serviceMonitorNamespaceSelector: {}
+            podMonitorSelector: {}
+            podMonitorNamespaceSelector: {}
+            ruleSelector: {}
+            ruleNamespaceSelector: {}
+        nodeSelector:
+          kubernetes.io/arch: amd64
+        tolerations:
+          - operator: Exists
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
