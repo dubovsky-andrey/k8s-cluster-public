@@ -63,7 +63,7 @@ spec:
         - containerPort: 8443
         volumeMounts:
         - name: moodle-storage
-          mountPath: /temport
+          mountPath: /bitnami/moodle
       volumes:
       - name: moodle-storage
         persistentVolumeClaim:
