@@ -55,6 +55,9 @@ spec:
       containers:
       - name: moodle
         image: bitnamilegacy/moodle
+        env:
+        - name: BITNAMI_DEBUG
+          value: "true"
         envFrom:
         - configMapRef:
             name: moodle-config
