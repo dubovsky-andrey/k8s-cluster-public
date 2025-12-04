@@ -36,12 +36,13 @@ spec:
 # Deployment MariaDB
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mariadb
   namespace: dev
 spec:
   replicas: 1
+  serviceName: mariadb
   selector:
     matchLabels:
       app: mariadb

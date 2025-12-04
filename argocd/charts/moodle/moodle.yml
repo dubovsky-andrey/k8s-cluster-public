@@ -61,13 +61,6 @@ spec:
         ports:
         - containerPort: 8080
         - containerPort: 8443
-        volumeMounts:
-        - name: moodle-storage
-          mountPath: /bitnami/moodle
-      volumes:
-      - name: moodle-storage
-        persistentVolumeClaim:
-          claimName: moodle-pvc
 # Service Moodle
 ---
 apiVersion: v1
