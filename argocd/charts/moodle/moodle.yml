@@ -53,9 +53,7 @@ spec:
         app: moodle
     spec:
       securityContext:
-        runAsUser: 1030
-        runAsGroup: 100
-        fsGroup: 100
+        runAsUser: 1001
       containers:
       - name: moodle
         image: bitnamilegacy/moodle
