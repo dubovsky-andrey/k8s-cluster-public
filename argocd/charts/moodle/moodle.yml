@@ -55,15 +55,20 @@ spec:
       containers:
       - name: moodle
         image: bitnamilegacy/moodle
-        env:
-        - name: BITNAMI_DEBUG
-          value: "true"
         envFrom:
         - configMapRef:
             name: moodle-config
         ports:
         - containerPort: 8080
         - containerPort: 8443
+        volumeMounts:
+        - name: moodle-storage
+          mountPath: /bitnami/moodle
+      volumes:
+      - name: moodle-storage
+        persistentVolumeClaim:
+          claimName: moodle-pvc
+BITNAMI_DEBUG: "true"
 # Service Moodle
 ---
 apiVersion: v1
