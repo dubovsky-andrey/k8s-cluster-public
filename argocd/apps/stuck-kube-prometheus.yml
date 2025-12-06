@@ -16,7 +16,10 @@ spec:
         crds:
           enabled: true
         grafana:
-          adminPassword: admin
+          admin:
+            existingSecret: grafana-admin-credentials
+            userKey: admin-user
+            passwordKey: admin-password
           service:
             type: NodePort
             nodePort: 30008
