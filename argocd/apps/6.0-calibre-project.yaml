@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: calibre
+  namespace: argocd
+spec:
+  description: calibre
+
+  sourceRepos:
+    - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+
+  destinations:
+    - namespace: dev
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
