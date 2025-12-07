@@ -46,14 +46,18 @@ spec:
       labels:
         app: adguardhome
     spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: adguardhome
           image: adguard/adguardhome:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 53
+              hostPort: 53
               protocol: TCP
             - containerPort: 53
+              hostPort: 53
               protocol: UDP
             - containerPort: 67
               protocol: UDP
