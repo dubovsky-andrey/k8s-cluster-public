@@ -47,6 +47,12 @@ spec:
   selector:
     matchLabels:
       app: moodle
+  revisionHistoryLimit: 100
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
   template:
     metadata:
       labels:
@@ -55,9 +61,13 @@ spec:
       containers:
       - name: moodle
         image: bitnamilegacy/moodle
+        imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
             name: moodle-config
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
         ports:
         - containerPort: 8080
         - containerPort: 8443
