@@ -126,6 +126,7 @@ spec:
     - name: ui
       port: 3000
       targetPort: 3000
+      nodePort: 30004
       protocol: TCP
     - name: dns-over-tls
       port: 853
