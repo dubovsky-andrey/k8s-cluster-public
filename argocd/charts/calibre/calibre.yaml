@@ -59,7 +59,7 @@ metadata:
   namespace: books
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
@@ -73,7 +73,7 @@ metadata:
   namespace: books
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
