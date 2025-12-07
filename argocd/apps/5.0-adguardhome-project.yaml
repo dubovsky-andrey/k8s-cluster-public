@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: adguardhome
+  namespace: argocd
+spec:
+  description: adguardhome project
+
+  sourceRepos:
+    - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+
+  destinations:
+    - namespace: prod
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
