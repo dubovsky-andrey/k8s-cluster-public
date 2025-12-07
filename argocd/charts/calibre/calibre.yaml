@@ -62,7 +62,9 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
+  storageClassName: nfs-storage
+  volumeName: calibre-pv-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -74,7 +76,9 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 10Gi
+  storageClassName: nfs-storage
+  volumeName: calibre-pv-books
 ---
 apiVersion: v1
 kind: PersistentVolume
