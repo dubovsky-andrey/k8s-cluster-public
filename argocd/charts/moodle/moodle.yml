@@ -68,16 +68,16 @@ spec:
       - name: moodle-storage
         persistentVolumeClaim:
           claimName: moodle-pvc
-        livenessProbe:
-          tcpSocket:
-            port: 8080
-          initialDelaySeconds: 120
-          periodSeconds: 10
-        readinessProbe:
-          tcpSocket:
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
+      livenessProbe:
+        tcpSocket:
+          port: 8080
+        initialDelaySeconds: 120
+        periodSeconds: 10
+      readinessProbe:
+        tcpSocket:
+          port: 8080
+        initialDelaySeconds: 30
+        periodSeconds: 10
         resources:
           requests:
             cpu: "250m"
