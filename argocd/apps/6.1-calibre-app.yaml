@@ -13,7 +13,7 @@ spec:
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
-    namespace: dev
+    namespace: books
   syncPolicy:
     automated:
       prune: true

@@ -10,7 +10,7 @@ spec:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
 
   destinations:
-    - namespace: dev
+    - namespace: books
       server: https://kubernetes.default.svc
 
   clusterResourceWhitelist:
