@@ -85,9 +85,13 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false
+          seccompProfile:
+            type: RuntimeDefault
           capabilities:
             drop:
               - ALL
+            add:
+              - CHOWN
         ports:
         - containerPort: 8080
         - containerPort: 8443
