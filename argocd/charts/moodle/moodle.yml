@@ -43,15 +43,16 @@ spec:
   storageClassName: nfs-storage
   volumeName: moodle-pv
 
-# Deployment Moodle
+# StatefulSet Moodle
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: moodle
   namespace: dev
 spec:
   replicas: 1
+  serviceName: moodle
   selector:
     matchLabels:
         app.kubernetes.io/name: moodle

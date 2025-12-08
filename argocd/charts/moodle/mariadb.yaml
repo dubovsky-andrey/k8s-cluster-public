@@ -33,7 +33,7 @@ spec:
   storageClassName: nfs-storage
   volumeName: mariadb-moodle-pv 
 
-# Deployment MariaDB
+# StatefulSet MariaDB
 ---
 apiVersion: apps/v1
 kind: StatefulSet
