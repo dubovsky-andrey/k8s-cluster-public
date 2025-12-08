@@ -80,7 +80,7 @@ spec:
           - ALL
       containers:
       - name: moodle
-        image: bitnami/moodle
+        image: bitnami/moodle:latest
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
