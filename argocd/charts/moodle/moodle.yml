@@ -59,11 +59,10 @@ spec:
         app.kubernetes.io/part-of: moodle-project
         app.kubernetes.io/instance: n7
   revisionHistoryLimit: 15
-  strategy:
+  updateStrategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
+      partition: 0
   template:
     metadata:
       labels:
@@ -72,6 +71,10 @@ spec:
         app.kubernetes.io/instance: n7
     spec:
       terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsUser: 1029
+        runAsGroup: 100
+        fsGroup: 100
       containers:
       - name: moodle
         image: bitnamilegacy/moodle@sha256:a7bd6bf34b736dad22ee22168d4bfd830b7bedf9e34b89732d92d437317cb1d0
