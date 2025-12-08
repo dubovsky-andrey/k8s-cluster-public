@@ -72,15 +72,15 @@ spec:
     spec:
       terminationGracePeriodSeconds: 60
       securityContext:
-        runAsUser: 1029
-        runAsGroup: 100
-        fsGroup: 100
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       capabilities:
         drop:
           - ALL
       containers:
       - name: moodle
-        image: bitnami/moodle:latest
+        image: bitnamilegacy/moodle@sha256:a7bd6bf34b736dad22ee22168d4bfd830b7bedf9e34b89732d92d437317cb1d0
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
