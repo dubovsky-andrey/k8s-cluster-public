@@ -36,7 +36,6 @@ spec:
   storageClassName: nfs-storage
   volumeName: moodle-pv
 
-
 # Deployment Moodle
 ---
 apiVersion: apps/v1
@@ -82,13 +81,18 @@ spec:
         - name: moodle-storage
           mountPath: /bitnami/moodle
         livenessProbe:
-          tcpSocket:
-            port: 8080
+          httpGet:
+            scheme: HTTPS
+            path: /
+            port: 8443
           initialDelaySeconds: 120
           periodSeconds: 10
         readinessProbe:
-          tcpSocket:
-            port: 8080
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - /opt/bitnami/php/bin/php /opt/bitnami/moodle/admin/cli/cron.php --help
           initialDelaySeconds: 30
           periodSeconds: 10
         resources:
@@ -96,13 +100,12 @@ spec:
             cpu: "250m"
             memory: "512Mi"
           limits:
-            cpu: "1"
-            memory: "2Gi"
+            cpu: "500m"
+            memory: "1Gi"
       volumes:
       - name: moodle-storage
         persistentVolumeClaim:
           claimName: moodle-pvc
-
 
 # Service Moodle
 ---
