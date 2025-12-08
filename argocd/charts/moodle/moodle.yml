@@ -11,6 +11,7 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteMany
+  volumeMode: Filesystem
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs-storage
   nfs:
@@ -28,6 +29,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
+  volumeMode: Filesystem
   resources:
     requests:
       storage: 10Gi
@@ -46,8 +48,10 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: moodle
-  revisionHistoryLimit: 100
+        app.kubernetes.io/name: moodle
+        app.kubernetes.io/part-of: moodle
+        app.kubernetes.io/instance: n7
+  revisionHistoryLimit: 15
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -56,8 +60,11 @@ spec:
   template:
     metadata:
       labels:
-        app: moodle
+        app.kubernetes.io/name: moodle
+        app.kubernetes.io/part-of: moodle
+        app.kubernetes.io/instance: n7
     spec:
+      terminationGracePeriodSeconds: 60
       containers:
       - name: moodle
         image: bitnamilegacy/moodle
@@ -107,13 +114,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-    nodePort: 30002
   - name: https
     port: 8443
     targetPort: 8443
     nodePort: 30003
   selector:
-    app: moodle
+    app.kubernetes.io/name: moodle
