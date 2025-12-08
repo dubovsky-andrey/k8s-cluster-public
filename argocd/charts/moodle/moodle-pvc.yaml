@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: moodle-pvc
+  namespace: dev
+  labels:
+    app.kubernetes.io/name: moodle
+    app.kubernetes.io/part-of: moodle-project
+    app.kubernetes.io/instance: n7
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-storage
+  volumeName: moodle-pv
