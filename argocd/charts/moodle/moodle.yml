@@ -75,9 +75,12 @@ spec:
         runAsUser: 1029
         runAsGroup: 100
         fsGroup: 100
+      capabilities:
+        drop:
+          - ALL
       containers:
       - name: moodle
-        image: bitnamilegacy/moodle@sha256:a7bd6bf34b736dad22ee22168d4bfd830b7bedf9e34b89732d92d437317cb1d0
+        image: bitnami/moodle
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
