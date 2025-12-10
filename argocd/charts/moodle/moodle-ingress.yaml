@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: moodle-ingress
   namespace: dev
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   ingressClassName: nginx
   rules:
@@ -15,4 +17,4 @@ spec:
               service:
                 name: moodle
                 port:
-                  number: 30003
+                  number: 8443
