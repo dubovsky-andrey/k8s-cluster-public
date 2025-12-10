@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: moodle-svc
+                name: moodle
                 port:
                   number: 30003
