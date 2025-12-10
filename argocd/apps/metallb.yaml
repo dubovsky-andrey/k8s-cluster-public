@@ -27,7 +27,7 @@ spec:
               - effect: NoSchedule
                 operator: Exists
 
-    - repoURL: git@github.com:dubovsky-andrey/k8s-cluster-private.git
+    - repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
       targetRevision: main
       path: argocd/charts/metallb/
 
