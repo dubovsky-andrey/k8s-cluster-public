@@ -17,4 +17,4 @@ spec:
               service:
                 name: moodle
                 port:
-                  number: 8443
+                  number: 443
