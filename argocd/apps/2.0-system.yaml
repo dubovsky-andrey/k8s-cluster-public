@@ -9,6 +9,8 @@ spec:
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
     - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+    - https://helm.cilium.io/
+    - https://github.com/kubernetes-sigs/gateway-api.git
 
   destinations:
     - namespace: kube-system

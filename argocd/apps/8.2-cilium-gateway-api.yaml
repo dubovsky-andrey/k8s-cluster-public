@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium-gateway-api
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: system
+  sources:
+    - repoURL: https://github.com/kubernetes-sigs/gateway-api.git
+      path: config/crd/standard
+      targetRevision: v1.4.1
+    - repoURL: https://helm.cilium.io/
+      chart: cilium
+      targetRevision: 1.19.4
+      helm:
+        releaseName: cilium
+        values: |
+          kubeProxyReplacement: true
+          l7Proxy: true
+          gatewayAPI:
+            enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
