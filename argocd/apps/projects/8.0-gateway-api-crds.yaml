@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: gateway-api-crds
+  name: gateway-api
   namespace: argocd
 spec:
   description: Gateway API CRDs
