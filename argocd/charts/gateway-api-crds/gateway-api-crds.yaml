@@ -9,7 +9,7 @@ spec:
   project: gateway-api-crds
   source:
     repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
-    path: argocd/crds/gateway-api
+    path: argocd/charts/gateway-api
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
