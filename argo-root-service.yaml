@@ -9,8 +9,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "git@github.com:dubovsky-andrey/k8s-cluster-public.git"
-    path: "argocd/apps"
+    repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
+    path: "argocd/"
     targetRevision: "main"
     directory:
       recurse: true
