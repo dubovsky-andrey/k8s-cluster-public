@@ -22,6 +22,6 @@ status: {}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: books
+  name: calibre
 spec: {}
 status: {}
