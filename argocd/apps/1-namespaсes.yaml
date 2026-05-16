@@ -25,3 +25,10 @@ metadata:
   name: calibre
 spec: {}
 status: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gatewayapi
+spec: {}
+status: {}
