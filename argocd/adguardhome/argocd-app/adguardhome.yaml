@@ -9,7 +9,7 @@ spec:
   project: adguardhome
   source:
     repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
-    path: argocd/charts/adguardhome
+    path: argocd/adguardhome/config
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
