@@ -21,7 +21,9 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: main-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
       namespace: gatewayapi
   hostnames:
     - argo.h.com
@@ -31,8 +33,11 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: argocd-server
+        - group: ""
+          kind: Service
+          name: argocd-server
           port: 80
+          weight: 1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -41,7 +46,9 @@ metadata:
   namespace: kube-system
 spec:
   parentRefs:
-    - name: main-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
       namespace: gatewayapi
   hostnames:
     - hubble.h.com
@@ -51,8 +58,11 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: hubble-ui
+        - group: ""
+          kind: Service
+          name: hubble-ui
           port: 80
+          weight: 1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -61,7 +71,9 @@ metadata:
   namespace: calibre
 spec:
   parentRefs:
-    - name: main-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
       namespace: gatewayapi
   hostnames:
     - calibre.h.com
@@ -71,5 +83,8 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: calibre-web
+        - group: ""
+          kind: Service
+          name: calibre-web
           port: 8083
+          weight: 1

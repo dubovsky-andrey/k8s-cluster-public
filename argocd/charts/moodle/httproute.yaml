@@ -5,7 +5,9 @@ metadata:
   namespace: moodle
 spec:
   parentRefs:
-    - name: main-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
       namespace: gatewayapi
   hostnames:
     - moodle.h.com
@@ -15,5 +17,8 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: moodle
+        - group: ""
+          kind: Service
+          name: moodle
           port: 80
+          weight: 1
