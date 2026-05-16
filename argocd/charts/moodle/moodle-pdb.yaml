@@ -2,7 +2,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: moodle-pdb
-  namespace: dev
+  namespace: moodle
 spec:
   minAvailable: 1
   selector:

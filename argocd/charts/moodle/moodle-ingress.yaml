@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: moodle-ingress
-  namespace: dev
+  namespace: moodle
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:

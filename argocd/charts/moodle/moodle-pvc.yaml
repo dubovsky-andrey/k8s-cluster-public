@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: moodle-pvc
-  namespace: dev
+  namespace: moodle
   labels:
     app.kubernetes.io/name: moodle
     app.kubernetes.io/part-of: moodle-project
