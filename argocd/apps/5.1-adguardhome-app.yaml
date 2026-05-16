@@ -13,7 +13,7 @@ spec:
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
-    namespace: prod
+    namespace: adguardhome
   syncPolicy:
     automated:
       prune: true

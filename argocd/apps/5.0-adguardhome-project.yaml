@@ -10,7 +10,7 @@ spec:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
 
   destinations:
-    - namespace: prod
+    - namespace: adguardhome
       server: https://kubernetes.default.svc
 
   clusterResourceWhitelist:

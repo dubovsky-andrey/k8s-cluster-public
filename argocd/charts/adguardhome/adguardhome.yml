@@ -21,7 +21,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: adguardhome-pvc
-  namespace: prod
+  namespace: adguardhome
 spec:
   accessModes:
     - ReadWriteMany
@@ -35,7 +35,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adguardhome
-  namespace: prod
+  namespace: adguardhome
 spec:
   replicas: 1
   selector:
@@ -98,7 +98,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adguardhome-service
-  namespace: prod
+  namespace: adguardhome
 spec:
   selector:
     app: adguardhome
