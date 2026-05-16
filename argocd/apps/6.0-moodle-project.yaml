@@ -3,6 +3,8 @@ kind: AppProject
 metadata:
   name: moodle
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   description: Moodle
 
