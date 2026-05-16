@@ -10,10 +10,9 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/name: moodle
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: http
     port: 80
     targetPort: 8080
     protocol: TCP
-    nodePort: 30011
