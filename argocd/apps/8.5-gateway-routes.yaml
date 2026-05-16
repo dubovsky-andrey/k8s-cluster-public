@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gateway-routes
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  project: gateway-routes
+  source:
+    repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    path: argocd/charts/gateway-routes
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gatewayapi
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true
