@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: main-gateway
+  namespace: gatewayapi
+spec:
+  gatewayClassName: cilium
+  addresses:
+    - type: IPAddress
+      value: 192.168.1.82
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: "*.h.com"
+      allowedRoutes:
+        namespaces:
+          from: All
