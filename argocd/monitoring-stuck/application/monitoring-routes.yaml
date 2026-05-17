@@ -4,7 +4,7 @@ metadata:
   name: monitoring-routes
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2030"
+    argocd.argoproj.io/sync-wave: "2031"
 spec:
   project: monitoring
   source:
