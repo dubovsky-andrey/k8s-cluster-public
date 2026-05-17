@@ -10,6 +10,7 @@ spec:
 
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    - https://homarr-labs.github.io/charts/
 
   destinations:
     - namespace: homarr

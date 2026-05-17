@@ -8,11 +8,25 @@ metadata:
 spec:
   project: homarr
   source:
-    repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
-    path: argocd/homarr/manifests
-    targetRevision: main
-    directory:
-      exclude: httproute.yaml
+    repoURL: https://homarr-labs.github.io/charts/
+    chart: homarr
+    targetRevision: "8.19.0"
+    helm:
+      valuesObject:
+        image:
+          repository: ghcr.io/homarr-labs/homarr
+          tag: v1.60.0
+        service:
+          enabled: true
+          type: ClusterIP
+          port: 7575
+        persistence:
+          homarrDatabase:
+            enabled: true
+            storageClassName: nfs-storage
+            size: 5Gi
+        database:
+          externalDatabaseEnabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: homarr
