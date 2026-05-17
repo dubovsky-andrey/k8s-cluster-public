@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: homarr-routes
+  name: homarr-config
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2061"
@@ -11,8 +11,6 @@ spec:
     repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
     path: argocd/homarr/manifests
     targetRevision: main
-    directory:
-      include: httproute.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: homarr
