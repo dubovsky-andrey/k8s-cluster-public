@@ -53,6 +53,13 @@ spec:
         volumeMounts:
         - name: moodle-storage
           mountPath: /bitnami/moodle
+        startupProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /
+            port: 8443
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             scheme: HTTPS
