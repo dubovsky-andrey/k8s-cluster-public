@@ -23,7 +23,7 @@ spec:
         persistence:
           homarrDatabase:
             enabled: true
-            existingClaim: homarr-database
+            volumeClaimName: homarr-database
             size: 5Gi
         database:
           externalDatabaseEnabled: false
