@@ -3,16 +3,18 @@ kind: AppProject
 metadata:
   name: system
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
-  description: System
+  description: System-level addons managed via ArgoCD
 
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+    - https://github.com/kubernetes-sigs/gateway-api.git
 
   destinations:
-    - namespace: system
+    - namespace: kube-system
+      server: https://kubernetes.default.svc
+    - namespace: argocd
       server: https://kubernetes.default.svc
 
   clusterResourceWhitelist:
