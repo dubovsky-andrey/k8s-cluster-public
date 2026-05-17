@@ -3,10 +3,10 @@ kind: AppProject
 metadata:
   name: adguardhome
   namespace: argocd
-spec:
-  description: adguardhome project
   annotations:
     argocd.argoproj.io/sync-wave: "6"
+spec:
+  description: adguardhome project
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
 
