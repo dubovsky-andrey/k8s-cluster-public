@@ -48,3 +48,28 @@ spec:
           name: kube-prometheus-stack-prometheus
           port: 9090
           weight: 1
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: alertmanager-route
+  namespace: monitoring
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
+      namespace: gatewayapi
+  hostnames:
+    - alertmanager.h.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: kube-prometheus-stack-alertmanager
+          port: 9093
+          weight: 1
