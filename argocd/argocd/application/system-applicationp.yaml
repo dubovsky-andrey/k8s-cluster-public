@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  project: argocd
+  project: argocd-svc
   source:
     repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
     path: argocd/argocd/manifests
