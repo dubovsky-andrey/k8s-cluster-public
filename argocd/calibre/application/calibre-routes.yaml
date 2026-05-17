@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: calibre
+  name: calibre-routes
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2040"
+    argocd.argoproj.io/sync-wave: "2041"
 spec:
   project: calibre
   source:
-    repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
+    repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
     path: argocd/calibre/manifests
     targetRevision: main
     directory:
-      exclude: httproute.yaml
+      include: httproute.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: calibre
@@ -21,4 +21,5 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true

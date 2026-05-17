@@ -4,13 +4,15 @@ metadata:
   name: moodle
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "2050"
 spec:
   project: moodle
   source:
-    repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
-    path: argocd/charts/moodle
+    repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    path: argocd/moodle/manifests
     targetRevision: main
+    directory:
+      exclude: httproute.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: moodle
