@@ -6,9 +6,8 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/name: argocd-server
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: https
       port: 443
       targetPort: 8080
-      nodePort: 30080
