@@ -5,7 +5,8 @@ metadata:
   namespace: argocd
 spec:
   description: adguardhome project
-
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
 

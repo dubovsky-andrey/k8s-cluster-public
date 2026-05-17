@@ -1,17 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: argocd-svc
+  name: system
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
-  description: Argocd-Service
+  description: System-level addons managed via ArgoCD
 
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+    - https://github.com/kubernetes-sigs/gateway-api.git
 
   destinations:
+    - namespace: kube-system
+      server: https://kubernetes.default.svc
     - namespace: argocd
       server: https://kubernetes.default.svc
 
