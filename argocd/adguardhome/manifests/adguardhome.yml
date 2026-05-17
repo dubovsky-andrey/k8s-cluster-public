@@ -118,7 +118,6 @@ spec:
     - name: http
       port: 80
       targetPort: 80
-      nodePort: 30005
       protocol: TCP
     - name: https-tcp
       port: 443
@@ -156,4 +155,4 @@ spec:
       port: 5443
       targetPort: 5443
       protocol: UDP
-  type: NodePort
+  type: ClusterIP
