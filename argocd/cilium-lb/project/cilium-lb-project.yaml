@@ -4,7 +4,7 @@ metadata:
   name: cilium-lb
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1001"
+    argocd.argoproj.io/sync-wave: "1000"
 spec:
   description: Cilium L2 load balancer resources
 

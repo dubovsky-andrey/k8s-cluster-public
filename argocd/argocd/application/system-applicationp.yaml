@@ -4,7 +4,7 @@ metadata:
   name: argocd-svc
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2000"
+    argocd.argoproj.io/sync-wave: "2004"
 spec:
   project: argocd-svc
   source:

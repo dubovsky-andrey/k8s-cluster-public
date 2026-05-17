@@ -4,7 +4,7 @@ metadata:
   name: csi-driver-smb
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1002"
+    argocd.argoproj.io/sync-wave: "1001"
 spec:
   description: SMB CSI driver
 

@@ -4,7 +4,7 @@ metadata:
   name: gateway-api
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2003"
+    argocd.argoproj.io/sync-wave: "2002"
 spec:
   project: gatewayapi
   source:
