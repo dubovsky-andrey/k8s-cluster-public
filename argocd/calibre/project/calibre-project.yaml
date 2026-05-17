@@ -3,6 +3,8 @@ kind: AppProject
 metadata:
   name: calibre
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1040"
 spec:
   description: calibre
 
