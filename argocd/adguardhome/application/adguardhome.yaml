@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: system
+  name: adguardhome
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
-  project: system
+  project: adguardhome
   source:
     repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
-    path: argocd/1-system/manifests
+    path: argocd/adguardhome/manifests
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
-    namespace: system
+    namespace: adguardhome
   syncPolicy:
     automated:
       prune: true
