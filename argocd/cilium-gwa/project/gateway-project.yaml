@@ -10,6 +10,7 @@ spec:
 
   sourceRepos:
     - https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    - https://github.com/kubernetes-sigs/gateway-api.git
 
   destinations:
     - namespace: gatewayapi

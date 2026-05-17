@@ -6,10 +6,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2003"
 spec:
-  project: gateway-routes
+  project: gatewayapi
   source:
     repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
-    path: argocd/charts/gateway-routes
+    path: argocd/cilium-gwa/manifests
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc

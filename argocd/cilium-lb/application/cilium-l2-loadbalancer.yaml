@@ -4,12 +4,12 @@ metadata:
   name: cilium-l2-loadbalancer
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "2001"
 spec:
-  project: system
+  project: cilium-lb
   source:
     repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
-    path: argocd/charts/cilium-l2-loadbalancer
+    path: argocd/cilium-lb/manifests
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc

@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: csi-driver-smb
+  name: cilium-lb
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1001"
 spec:
-  description: SMB CSI driver
+  description: Cilium L2 load balancer resources
 
   sourceRepos:
-    - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+    - https://github.com/dubovsky-andrey/k8s-cluster-public.git
 
   destinations:
     - namespace: kube-system

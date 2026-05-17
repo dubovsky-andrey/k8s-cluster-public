@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2002"
 spec:
-  project: system
+  project: gatewayapi
   source:
     repoURL: https://github.com/kubernetes-sigs/gateway-api.git
     path: config/crd/standard
