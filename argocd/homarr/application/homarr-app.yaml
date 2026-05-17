@@ -24,7 +24,6 @@ spec:
           homarrDatabase:
             enabled: true
             existingClaim: homarr-database
-            storageClassName: nfs-storage
             size: 5Gi
         database:
           externalDatabaseEnabled: false
