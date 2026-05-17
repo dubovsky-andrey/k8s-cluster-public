@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: homarr-database-pv
+  labels:
+    type: nfs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  claimRef:
+    namespace: homarr
+    name: homarr-database
+  nfs:
+    path: /volume1/nfs/k8s-data/homarr/database
+    server: 192.168.1.20
