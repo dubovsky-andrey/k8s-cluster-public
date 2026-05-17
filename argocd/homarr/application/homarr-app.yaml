@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homarr
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2060"
+spec:
+  project: homarr
+  source:
+    repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    path: argocd/homarr/manifests
+    targetRevision: main
+    directory:
+      exclude: httproute.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: homarr
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
