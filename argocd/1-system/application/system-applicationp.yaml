@@ -9,7 +9,7 @@ spec:
   project: system
   source:
     repoURL: "https://github.com/dubovsky-andrey/k8s-cluster-public.git"
-    path: argocd/system/manifests
+    path: argocd/1-system/manifests
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
