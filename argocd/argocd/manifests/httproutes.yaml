@@ -1,8 +1,8 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: hubble-route
-  namespace: kube-system
+  name: argocd-route
+  namespace: argocd
 spec:
   parentRefs:
     - group: gateway.networking.k8s.io
@@ -10,7 +10,7 @@ spec:
       name: main-gateway
       namespace: gatewayapi
   hostnames:
-    - hubble.h.com
+    - argo.h.com
   rules:
     - matches:
         - path:
@@ -19,6 +19,6 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: hubble-ui
+          name: argocd-server-svc
           port: 80
           weight: 1
