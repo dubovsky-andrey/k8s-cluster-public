@@ -4,7 +4,7 @@ metadata:
   name: metrics-server
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2004"
+    argocd.argoproj.io/sync-wave: "2005"
 spec:
   project: metrics-server
   source:
