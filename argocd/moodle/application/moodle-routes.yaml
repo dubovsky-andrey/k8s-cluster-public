@@ -9,7 +9,7 @@ spec:
   project: moodle
   source:
     repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
-    path: argocd/moodle/k8s-config
+    path: argocd/moodle/manifests
     targetRevision: main
     directory:
       include: httproute.yaml
