@@ -2,33 +2,23 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: system
-spec: {}
-status: {}
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: adguardhome
-spec: {}
-status: {}
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: moodle 
-spec: {}
-status: {}
+  name: moodle
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: calibre
-spec: {}
-status: {}
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: gatewayapi
-spec: {}
-status: {}
