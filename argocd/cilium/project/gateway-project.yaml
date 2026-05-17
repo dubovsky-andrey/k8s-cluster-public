@@ -3,6 +3,8 @@ kind: AppProject
 metadata:
   name: gateway-routes
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1002"
 spec:
   description: Cilium Gateway API routes
 
