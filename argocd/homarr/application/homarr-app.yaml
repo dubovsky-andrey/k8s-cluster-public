@@ -23,7 +23,8 @@ spec:
         persistence:
           homarrDatabase:
             enabled: true
-            volumeClaimName: homarr-database
+            storageClassName: nfs-storage
+            volumeClaimName: homarr-database-pv
             size: 5Gi
         database:
           externalDatabaseEnabled: false
