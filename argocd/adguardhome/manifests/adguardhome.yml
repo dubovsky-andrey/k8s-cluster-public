@@ -53,33 +53,46 @@ spec:
           image: adguard/adguardhome:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 53
+            - name: dns-tcp
+              containerPort: 53
               hostPort: 53
               protocol: TCP
-            - containerPort: 53
+            - name: dns-udp
+              containerPort: 53
               hostPort: 53
               protocol: UDP
-            - containerPort: 67
+            - name: dhcp-udp
+              containerPort: 67
               protocol: UDP
-            - containerPort: 80
+            - name: http
+              containerPort: 80
               protocol: TCP
-            - containerPort: 443
+            - name: https-tcp
+              containerPort: 443
               protocol: TCP
-            - containerPort: 443
+            - name: https-udp
+              containerPort: 443
               protocol: UDP
-            - containerPort: 3000
+            - name: ui
+              containerPort: 3000
               protocol: TCP
-            - containerPort: 853
+            - name: dns-over-tls
+              containerPort: 853
               protocol: TCP
-            - containerPort: 784
+            - name: dns-quic
+              containerPort: 784
               protocol: UDP
-            - containerPort: 853
+            - name: dns-over-udp
+              containerPort: 853
               protocol: UDP
-            - containerPort: 8853
+            - name: dns-alt-udp
+              containerPort: 8853
               protocol: UDP
-            - containerPort: 5443
+            - name: dns-alt-tcp
+              containerPort: 5443
               protocol: TCP
-            - containerPort: 5443
+            - name: dns-alt2-udp
+              containerPort: 5443
               protocol: UDP
           volumeMounts:
             - name: adguard-storage
@@ -105,54 +118,54 @@ spec:
   ports:
     - name: dns-tcp
       port: 53
-      targetPort: 53
+      targetPort: dns-tcp
       protocol: TCP
     - name: dns-udp
       port: 53
-      targetPort: 53
+      targetPort: dns-udp
       protocol: UDP
     - name: dhcp-udp
       port: 67
-      targetPort: 67
+      targetPort: dhcp-udp
       protocol: UDP
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: http
       protocol: TCP
     - name: https-tcp
       port: 443
-      targetPort: 443
+      targetPort: https-tcp
       protocol: TCP
     - name: https-udp
       port: 443
-      targetPort: 443
+      targetPort: https-udp
       protocol: UDP
     - name: ui
       port: 3000
-      targetPort: 3000
+      targetPort: ui
       protocol: TCP
     - name: dns-over-tls
       port: 853
-      targetPort: 853
+      targetPort: dns-over-tls
       protocol: TCP
     - name: dns-quic
       port: 784
-      targetPort: 784
+      targetPort: dns-quic
       protocol: UDP
     - name: dns-over-udp
       port: 853
-      targetPort: 853
+      targetPort: dns-over-udp
       protocol: UDP
     - name: dns-alt-udp
       port: 8853
-      targetPort: 8853
+      targetPort: dns-alt-udp
       protocol: UDP
     - name: dns-alt-tcp
       port: 5443
-      targetPort: 5443
+      targetPort: dns-alt-tcp
       protocol: TCP
     - name: dns-alt2-udp
       port: 5443
-      targetPort: 5443
+      targetPort: dns-alt2-udp
       protocol: UDP
   type: ClusterIP
