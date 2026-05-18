@@ -22,16 +22,63 @@ spec:
             passwordKey: admin-password
           service:
             type: ClusterIP
+          resources:
+            requests:
+              cpu: 200m
+              memory: 768Mi
+            limits:
+              cpu: 200m
+              memory: 768Mi
         prometheus:
           service:
             type: ClusterIP
           prometheusSpec:
+            resources:
+              requests:
+                cpu: 200m
+                memory: 812Mi
+              limits:
+                cpu: 200m
+                memory: 812Mi
             serviceMonitorSelector: {}
             serviceMonitorNamespaceSelector: {}
             podMonitorSelector: {}
             podMonitorNamespaceSelector: {}
             ruleSelector: {}
             ruleNamespaceSelector: {}
+        alertmanager:
+          alertmanagerSpec:
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                cpu: 50m
+                memory: 64Mi
+        prometheusOperator:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
+        kube-state-metrics:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
+        prometheus-node-exporter:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 50Mi
         nodeSelector:
           kubernetes.io/arch: amd64
         tolerations:

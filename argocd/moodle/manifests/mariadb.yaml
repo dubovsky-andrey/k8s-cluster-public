@@ -60,17 +60,17 @@ spec:
         volumeMounts:
         - name: mariadb-storage
           mountPath: /bitnami/mariadb
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "400Mi"
+          limits:
+            cpu: "100m"
+            memory: "400Mi"
       volumes:
       - name: mariadb-storage
         persistentVolumeClaim:
           claimName: mariadb-pvc
-        # resources:
-        #   requests:
-        #     cpu: "1500m"
-        #     memory: "1Gi"
-        #   limits:
-        #     cpu: "2000"
-        #     memory: "2Gi"
 # Service MariaDB
 ---
 apiVersion: v1
