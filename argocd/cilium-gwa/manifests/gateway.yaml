@@ -16,3 +16,16 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.h.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: h-com-tls
+      allowedRoutes:
+        namespaces:
+          from: All
