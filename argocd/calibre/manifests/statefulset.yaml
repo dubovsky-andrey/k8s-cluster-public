@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/name: calibre
     app.kubernetes.io/managed-by: argocd
 spec:
-  # scaling: disabled - shared config/books PVC behavior must be verified before multiple replicas.
   replicas: 1
   serviceName: calibre-web
   selector:
@@ -23,7 +22,6 @@ spec:
         app.kubernetes.io/managed-by: argocd
     spec:
       automountServiceAccountToken: false
-      # exception: linuxserver image starts through a root init process before applying PUID/PGID.
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -67,12 +65,10 @@ spec:
               memory: "400Mi"
           securityContext:
             allowPrivilegeEscalation: false
-            # exception: linuxserver init and app runtime may write outside mounted app data paths.
             readOnlyRootFilesystem: false
             capabilities:
               drop:
                 - ALL
-              # exception: linuxserver s6 init uses PUID/PGID and fixes ownership at startup.
               add:
                 - CHOWN
                 - SETGID
