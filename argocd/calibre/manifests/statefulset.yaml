@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: calibre
+  namespace: calibre
+  labels:
+    app.kubernetes.io/name: calibre
+    app.kubernetes.io/managed-by: argocd
+spec:
+  # scaling: disabled - shared config/books PVC behavior must be verified before multiple replicas.
+  replicas: 1
+  serviceName: calibre-web
+  selector:
+    matchLabels:
+      app: calibre-web
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: calibre-web
+        app.kubernetes.io/name: calibre
+        app.kubernetes.io/managed-by: argocd
+    spec:
+      automountServiceAccountToken: false
+      # exception: linuxserver image starts through a root init process before applying PUID/PGID.
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: calibre-web
+          image: lscr.io/linuxserver/calibre-web:0.6.26
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - name: http
+              containerPort: 8083
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: books
+              mountPath: /books
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "400Mi"
+            limits:
+              cpu: "500m"
+              memory: "400Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            # exception: linuxserver init and app runtime may write outside mounted app data paths.
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: calibre-web-config
+        - name: books
+          persistentVolumeClaim:
+            claimName: calibre-web-books

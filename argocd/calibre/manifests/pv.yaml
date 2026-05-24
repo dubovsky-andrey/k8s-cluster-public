@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: calibre-pv-books
+  labels:
+    type: nfs
+    app.kubernetes.io/name: calibre
+    app.kubernetes.io/managed-by: argocd
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /volume1/nfs/k8s-data/calibre/books
+    server: 192.168.1.20
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: calibre-pv-config
+  labels:
+    type: nfs
+    app.kubernetes.io/name: calibre
+    app.kubernetes.io/managed-by: argocd
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /volume1/nfs/k8s-data/calibre/config
+    server: 192.168.1.20

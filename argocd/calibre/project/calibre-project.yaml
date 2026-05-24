@@ -16,9 +16,17 @@ spec:
       server: https://kubernetes.default.svc
 
   clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
+    - group: ''
+      kind: Namespace
+    - group: ''
+      kind: PersistentVolume
 
   namespaceResourceWhitelist:
-    - group: '*'
-      kind: '*'
+    - group: apps
+      kind: StatefulSet
+    - group: ''
+      kind: Service
+    - group: ''
+      kind: PersistentVolumeClaim
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute

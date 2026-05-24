@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: calibre-web
   namespace: calibre
+  labels:
+    app.kubernetes.io/name: calibre
+    app.kubernetes.io/managed-by: argocd
 spec:
   type: ClusterIP
   selector:

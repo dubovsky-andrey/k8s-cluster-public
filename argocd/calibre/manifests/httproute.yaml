@@ -4,6 +4,9 @@ kind: HTTPRoute
 metadata:
   name: calibre-route
   namespace: calibre
+  labels:
+    app.kubernetes.io/name: calibre
+    app.kubernetes.io/managed-by: argocd
 spec:
   parentRefs:
     - group: gateway.networking.k8s.io
