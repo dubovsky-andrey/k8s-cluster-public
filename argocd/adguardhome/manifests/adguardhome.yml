@@ -103,11 +103,11 @@ spec:
               subPath: conf
           resources:
             requests:
-              cpu: "1500m"
-              memory: "2000Mi"
+              cpu: "2500m"
+              memory: "3000Mi"
             limits:
-              cpu: "1500m"
-              memory: "2000Mi"
+              cpu: "2500m"
+              memory: "3000Mi"
       volumes:
         - name: adguard-storage
           persistentVolumeClaim:
