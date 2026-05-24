@@ -18,8 +18,8 @@ spec:
           - --kubelet-preferred-address-types=InternalIP,Hostname
         resources:
           requests:
-            cpu: "100m"
-            memory: "128Mi"
+            cpu: "50m"
+            memory: "40Mi"
           limits:
             cpu: "100m"
             memory: "128Mi"
