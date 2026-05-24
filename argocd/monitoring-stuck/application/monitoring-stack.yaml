@@ -58,7 +58,7 @@ spec:
         prometheusOperator:
           resources:
             requests:
-              cpu: 50m
+              cpu: 40m
               memory: 64Mi
             limits:
               cpu: 50m
@@ -66,7 +66,7 @@ spec:
         kube-state-metrics:
           resources:
             requests:
-              cpu: 50m
+              cpu: 30m
               memory: 64Mi
             limits:
               cpu: 50m
