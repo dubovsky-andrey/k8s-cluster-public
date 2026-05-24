@@ -22,6 +22,7 @@ spec:
             passwordKey: admin-password
           service:
             type: ClusterIP
+          # kube-prometheus-stack-grafana
           resources:
             requests:
               cpu: 50m
@@ -32,6 +33,7 @@ spec:
         prometheus:
           service:
             type: ClusterIP
+          # prometheus-kube-prometheus-stack-prometheus
           prometheusSpec:
             resources:
               requests:
@@ -47,6 +49,7 @@ spec:
             ruleSelector: {}
             ruleNamespaceSelector: {}
         alertmanager:
+          # alertmanager-kube-prometheus-stack-alertmanager
           alertmanagerSpec:
             resources:
               requests:
@@ -55,14 +58,16 @@ spec:
               limits:
                 cpu: 50m
                 memory: 64Mi
+        # kube-prometheus-stack-operator
         prometheusOperator:
           resources:
             requests:
               cpu: 40m
-              memory: 64Mi
+              memory: 32Mi
             limits:
               cpu: 50m
               memory: 64Mi
+        # kube-prometheus-stack-kube-state-metrics
         kube-state-metrics:
           resources:
             requests:
@@ -70,12 +75,13 @@ spec:
               memory: 64Mi
             limits:
               cpu: 50m
-              memory: 64Mi
+              memory: 54Mi
+        # kube-prometheus-stack-prometheus-node-exporter
         prometheus-node-exporter:
           resources:
             requests:
               cpu: 50m
-              memory: 10Mi
+              memory: 20Mi
             limits:
               cpu: 50m
               memory: 50Mi
