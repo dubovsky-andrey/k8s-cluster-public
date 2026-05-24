@@ -24,10 +24,10 @@ spec:
             type: ClusterIP
           resources:
             requests:
-              cpu: 200m
-              memory: 768Mi
+              cpu: 50m
+              memory: 510Mi
             limits:
-              cpu: 200m
+              cpu: 300m
               memory: 768Mi
         prometheus:
           service:
@@ -36,10 +36,10 @@ spec:
             resources:
               requests:
                 cpu: 200m
-                memory: 812Mi
+                memory: 312Mi
               limits:
                 cpu: 200m
-                memory: 812Mi
+                memory: 612Mi
             serviceMonitorSelector: {}
             serviceMonitorNamespaceSelector: {}
             podMonitorSelector: {}
@@ -51,7 +51,7 @@ spec:
             resources:
               requests:
                 cpu: 50m
-                memory: 64Mi
+                memory: 32Mi
               limits:
                 cpu: 50m
                 memory: 64Mi
@@ -75,7 +75,7 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 50Mi
+              memory: 10Mi
             limits:
               cpu: 50m
               memory: 50Mi
