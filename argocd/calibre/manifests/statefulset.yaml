@@ -72,8 +72,9 @@ spec:
             capabilities:
               drop:
                 - ALL
-              # exception: linuxserver s6 init uses PUID/PGID and needs setuid/setgid.
+              # exception: linuxserver s6 init uses PUID/PGID and fixes ownership at startup.
               add:
+                - CHOWN
                 - SETGID
                 - SETUID
       volumes:
