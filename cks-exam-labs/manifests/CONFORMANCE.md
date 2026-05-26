@@ -44,6 +44,18 @@ Before syncing:
 - build and push `ghcr.io/dubovsky-andrey/cks-shell:v0.1.0`, or change the image name in every `ssh-pod.yaml`;
 - confirm NodePorts `32001`, `32002`, `32003` are not already used.
 
+The vCluster control plane uses non-persistent storage for these disposable labs:
+
+```yaml
+controlPlane:
+  statefulSet:
+    persistence:
+      volumeClaim:
+        enabled: false
+```
+
+This avoids requiring a default StorageClass or pre-created PVs. Deleting or recreating a vCluster resets that lab.
+
 ## Not Covered
 
 These are intentionally out of scope for vCluster labs:

@@ -11,6 +11,9 @@ controlPlane:
       image:
         tag: v1.34.0
   statefulSet:
+    persistence:
+      volumeClaim:
+        enabled: false
     resources:
       requests:
         cpu: 100m
