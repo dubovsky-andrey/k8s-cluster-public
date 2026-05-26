@@ -21,7 +21,7 @@ spec:
       automountServiceAccountToken: false
       initContainers:
         - name: bootstrap-task
-          image: bitnami/kubectl:1.34
+          image: bitnami/kubectl:latest
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh
@@ -41,7 +41,7 @@ spec:
               readOnly: true
       containers:
         - name: ssh
-          image: bitnami/kubectl:1.34
+          image: bitnami/kubectl:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: ssh
