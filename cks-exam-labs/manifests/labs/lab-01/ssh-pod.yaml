@@ -21,11 +21,11 @@ spec:
       automountServiceAccountToken: false
       initContainers:
         - name: bootstrap-task
-          image: ghcr.io/dubovsky-andrey/cks-shell:v0.1.0
+          image: bitnami/kubectl:1.34
           imagePullPolicy: IfNotPresent
           command:
-            - /bin/bash
-            - -lc
+            - /bin/sh
+            - -ec
             - kubectl apply -f /opt/cks/task-manifests.yaml
           env:
             - name: KUBECONFIG
@@ -41,7 +41,7 @@ spec:
               readOnly: true
       containers:
         - name: ssh
-          image: ghcr.io/dubovsky-andrey/cks-shell:v0.1.0
+          image: bitnami/kubectl:1.34
           imagePullPolicy: IfNotPresent
           ports:
             - name: ssh
@@ -52,16 +52,10 @@ spec:
             - name: KUBECONFIG
               value: /home/student/.kube/config
           command:
-            - /bin/bash
-            - -lc
+            - /bin/sh
+            - -ec
             - |
-              set -euo pipefail
-              install -d -m 700 -o student -g student /home/student/.ssh /home/student/.kube
-              cp /run/cks/authorized_keys /home/student/.ssh/authorized_keys
-              cp /run/cks/bashrc /home/student/.bashrc
-              chown -R student:student /home/student
-              chmod 600 /home/student/.ssh/authorized_keys /home/student/.kube/config
-              exec /usr/sbin/sshd -D -e
+              sleep infinity
           volumeMounts:
             - name: authorized-keys
               mountPath: /run/cks/authorized_keys
@@ -79,11 +73,6 @@ spec:
               mountPath: /home/student/task.md
               subPath: task.md
               readOnly: true
-          readinessProbe:
-            tcpSocket:
-              port: ssh
-            initialDelaySeconds: 5
-            periodSeconds: 10
           resources:
             requests:
               cpu: 50m
