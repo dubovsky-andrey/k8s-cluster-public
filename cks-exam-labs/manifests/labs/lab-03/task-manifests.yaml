@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: task-03
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: reader
+  namespace: task-03
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: excessive-reader
+  namespace: task-03
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: reader-excessive-access
+  namespace: task-03
+subjects:
+  - kind: ServiceAccount
+    name: reader
+    namespace: task-03
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: excessive-reader
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rbacy-web
+  namespace: task-03
+  labels:
+    app.kubernetes.io/name: rbacy-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rbacy-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rbacy-web
+    spec:
+      serviceAccountName: reader
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - name: http
+              containerPort: 80
