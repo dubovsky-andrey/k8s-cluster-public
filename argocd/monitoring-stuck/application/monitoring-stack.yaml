@@ -62,20 +62,20 @@ spec:
         prometheusOperator:
           resources:
             requests:
-              cpu: 40m
-              memory: 32Mi
+              cpu: 100m
+              memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 64Mi
+              cpu: 300m
+              memory: 256Mi
         # kube-prometheus-stack-kube-state-metrics
         kube-state-metrics:
           resources:
             requests:
-              cpu: 30m
-              memory: 54Mi
+              cpu: 100m
+              memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 64Mi
+              cpu: 300m
+              memory: 256Mi
         # kube-prometheus-stack-prometheus-node-exporter
         prometheus-node-exporter:
           resources:
