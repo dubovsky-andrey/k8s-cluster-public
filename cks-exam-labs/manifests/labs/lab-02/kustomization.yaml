@@ -14,5 +14,6 @@ configMapGenerator:
     files:
       - task.md=task-description.md
       - task-manifests.yaml=task-manifests.yaml
+      - val.sh=val.sh
 generatorOptions:
   disableNameSuffixHash: true

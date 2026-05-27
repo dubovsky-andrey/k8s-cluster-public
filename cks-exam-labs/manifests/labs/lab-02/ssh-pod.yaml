@@ -76,6 +76,10 @@ spec:
               mountPath: /home/student/task.md
               subPath: task.md
               readOnly: true
+            - name: task
+              mountPath: /home/student/val.sh
+              subPath: val.sh
+              readOnly: true
           resources:
             requests:
               cpu: 50m

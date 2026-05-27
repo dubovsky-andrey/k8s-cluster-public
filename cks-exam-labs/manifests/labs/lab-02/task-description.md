@@ -25,3 +25,9 @@ kubectl auth can-i --list -n omni --as system:serviceaccount:omni:frontend-defau
 kubectl auth can-i --list -n omni --as system:serviceaccount:omni:frontend
 kubectl auth can-i --list -n omni --as system:serviceaccount:omni:fe
 ```
+
+Validate your answer:
+
+```bash
+sh ~/val.sh
+```
