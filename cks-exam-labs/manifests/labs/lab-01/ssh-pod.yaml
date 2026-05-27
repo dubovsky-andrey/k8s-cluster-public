@@ -55,7 +55,10 @@ spec:
             - /bin/sh
             - -ec
             - |
-              sleep infinity
+              install -d -m 700 -o student -g student /home/student/.ssh
+              install -m 600 -o student -g student /run/cks/authorized_keys /home/student/.ssh/authorized_keys
+              install -m 644 -o student -g student /run/cks/bashrc /home/student/.bashrc
+              exec /usr/sbin/sshd -D -e
           volumeMounts:
             - name: authorized-keys
               mountPath: /run/cks/authorized_keys
