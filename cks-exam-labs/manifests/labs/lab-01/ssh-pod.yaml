@@ -41,7 +41,7 @@ spec:
               readOnly: true
       containers:
         - name: ssh
-          image: bitnami/kubectl:latest
+          image: ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04
           imagePullPolicy: IfNotPresent
           ports:
             - name: ssh
