@@ -4,7 +4,7 @@ metadata:
   name: cks-shell-base
 data:
   bashrc: |
-    export CKS_LAB_NAME=cks-lab-01
+    export CKS_LAB_NAME=cks-lab-02
     export KUBECONFIG=/home/student/.kube/config
     alias k=kubectl
     alias kgp='kubectl get pods'

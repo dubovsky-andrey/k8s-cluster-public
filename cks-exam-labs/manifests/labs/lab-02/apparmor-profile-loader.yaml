@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: frontend-apparmor-profile
+  labels:
+    app.kubernetes.io/name: frontend-apparmor-profile
+    app.kubernetes.io/part-of: cks-lab-02
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend-apparmor-profile
+      app.kubernetes.io/part-of: cks-lab-02
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend-apparmor-profile
+        app.kubernetes.io/part-of: cks-lab-02
+    spec:
+      hostPID: true
+      containers:
+        - name: loader
+          image: ubuntu:24.04
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              mkdir -p /host/etc/apparmor.d /host/data/pages/internal
+              printf '%s\n' \
+                '#include <tunables/global>' \
+                '' \
+                'profile restricted-frontend flags=(attach_disconnected,mediate_deleted) {' \
+                '  #include <abstractions/base>' \
+                '' \
+                '  network inet tcp,' \
+                '  network inet udp,' \
+                '  network inet icmp,' \
+                '' \
+                '  deny network raw,' \
+                '' \
+                '  deny network packet,' \
+                '' \
+                '  file,' \
+                '  umount,' \
+                '' \
+                '  deny /bin/** wl,' \
+                '  deny /usr/share/nginx/html/internal/* rw,' \
+                '  deny /boot/** wl,' \
+                '  deny /dev/** wl,' \
+                '  deny /etc/** wl,' \
+                '  deny /home/** wl,' \
+                '  deny /lib/** wl,' \
+                '  deny /lib64/** wl,' \
+                '  deny /media/** wl,' \
+                '  deny /mnt/** wl,' \
+                '  deny /opt/** wl,' \
+                '  deny /proc/** wl,' \
+                '  deny /root/** wl,' \
+                '  deny /sbin/** wl,' \
+                '  deny /srv/** wl,' \
+                '  deny /tmp/** wl,' \
+                '  deny /sys/** wl,' \
+                '  deny /usr/** wl,' \
+                '' \
+                '  audit /** w,' \
+                '' \
+                '  /var/run/nginx.pid w,' \
+                '' \
+                '  /usr/sbin/nginx ix,' \
+                '' \
+                '  deny /bin/dash mrwklx,' \
+                '  deny /bin/sh mrwklx,' \
+                '  deny /usr/bin/top mrwklx,' \
+                '' \
+                '  capability chown,' \
+                '  capability dac_override,' \
+                '  capability setuid,' \
+                '  capability setgid,' \
+                '  capability net_bind_service,' \
+                '' \
+                '  deny @{PROC}/{*,**^[0-9*],sys/kernel/shm*} wkx,' \
+                '  deny @{PROC}/sysrq-trigger rwklx,' \
+                '  deny @{PROC}/mem rwklx,' \
+                '  deny @{PROC}/kmem rwklx,' \
+                '  deny @{PROC}/kcore rwklx,' \
+                '  deny mount,' \
+                '  deny /sys/[^f]*/** wklx,' \
+                '  deny /sys/f[^s]*/** wklx,' \
+                '  deny /sys/fs/[^c]*/** wklx,' \
+                '  deny /sys/fs/c[^g]*/** wklx,' \
+                '  deny /sys/fs/cg[^r]*/** wklx,' \
+                '  deny /sys/firmware/efi/efivars/** rwklx,' \
+                '  deny /sys/kernel/security/** rwklx,' \
+                '}' \
+                > /host/etc/apparmor.d/frontend
+              printf '%s\n' 'Public Site' > /host/data/pages/index.html
+              printf '%s\n' 'Internal Site' > /host/data/pages/internal/index.html
+              chroot /host /sbin/apparmor_parser -q /etc/apparmor.d/frontend
+              sleep infinity
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - name: host-root
+              mountPath: /host
+      volumes:
+        - name: host-root
+          hostPath:
+            path: /
+            type: Directory
