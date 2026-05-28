@@ -15,19 +15,6 @@ Use the recommendations below to resolve this:
 - do not create a new service account;
 - do not use the `default` service account.
 
-Useful starting commands:
-
-```bash
-kubectl get pod frontend-site -n omni -o yaml
-kubectl get sa -n omni
-kubectl get role,rolebinding -n omni
-kubectl auth can-i --list -n omni --as system:serviceaccount:omni:frontend-default
-kubectl auth can-i --list -n omni --as system:serviceaccount:omni:frontend
-kubectl auth can-i --list -n omni --as system:serviceaccount:omni:fe
-```
-
-Validate your answer:
-
 ```bash
 sh ~/val.sh
 ```

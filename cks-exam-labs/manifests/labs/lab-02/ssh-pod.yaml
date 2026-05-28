@@ -80,6 +80,9 @@ spec:
               mountPath: /home/student/val.sh
               subPath: val.sh
               readOnly: true
+            - name: host-apparmor
+              mountPath: /etc/apparmor.d
+              readOnly: true
           resources:
             requests:
               cpu: 50m
@@ -101,3 +104,7 @@ spec:
           configMap:
             name: cks-lab-02-task
             defaultMode: 0555
+        - name: host-apparmor
+          hostPath:
+            path: /etc/apparmor.d
+            type: DirectoryOrCreate
