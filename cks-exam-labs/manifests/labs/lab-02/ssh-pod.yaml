@@ -100,3 +100,4 @@ spec:
         - name: task
           configMap:
             name: cks-lab-02-task
+            defaultMode: 0555
