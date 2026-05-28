@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cks-shell-base
+data:
+  bashrc: |
+    export CKS_LAB_NAME=cks-lab-03
+    export KUBECONFIG=/home/student/.kube/config
+    alias k=kubectl
+    alias kgp='kubectl get pods'
+    alias kga='kubectl get all'
+    PS1='student@${CKS_LAB_NAME:-cks-lab}:\w$ '
