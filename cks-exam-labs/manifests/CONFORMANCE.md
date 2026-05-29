@@ -29,7 +29,7 @@ These need a live sync or image build:
 
 | Check | Command |
 | --- | --- |
-| Shell image builds | `docker build -t ghcr.io/dubovsky-andrey/cks-shell:v0.1.0 cks-exam-labs/manifests/shared/cks-shell-image` |
+| Shell image builds | Build and publish `ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04` from the separate `k8s-ubuntu` repository |
 | vCluster creates kubeconfig Secret | `kubectl -n cks-lab-01 get secret vc-lab-01` |
 | SSH pod starts | `kubectl -n cks-lab-01 get pod -l app.kubernetes.io/name=cks-shell` |
 | SSH access works | `ssh student@<HOST_IP> -p 32001` |
@@ -41,7 +41,7 @@ These need a live sync or image build:
 Before syncing:
 
 - replace `REPLACE_WITH_YOUR_PUBLIC_KEY` in every lab `ssh-authorized-key-secret.yaml`;
-- build and push `ghcr.io/dubovsky-andrey/cks-shell:v0.1.0`, or change the image name in every `ssh-pod.yaml`;
+- build and push `ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04`, or change the image name in every `ssh-pod.yaml`;
 - confirm NodePorts `32001`, `32002`, `32003` are not already used.
 
 The vCluster control plane uses non-persistent storage for these disposable labs:

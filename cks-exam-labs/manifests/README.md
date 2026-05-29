@@ -63,16 +63,16 @@ Replace the placeholder with your real public key.
 
 The `cks-exam-labs/manifests/shared` directory contains the common source templates for future labs. The live lab keeps local copies so Kustomize can build with the default safe load restrictions.
 
-Build and publish the shell image from:
+Build and publish the shell image from the separate `k8s-ubuntu` repository:
 
 ```text
-cks-exam-labs/manifests/shared/cks-shell-image
+ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04
 ```
 
 Then update the image in each lab's `ssh-pod.yaml` if your registry is different:
 
 ```text
-ghcr.io/dubovsky-andrey/cks-shell:v0.1.0
+ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04
 ```
 
 ## Access

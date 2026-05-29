@@ -5,6 +5,13 @@ metadata:
 data:
   bashrc: |
     export KUBECONFIG=/home/student/.kube/config
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    fi
+    if command -v kubectl >/dev/null 2>&1; then
+      source <(kubectl completion bash)
+      complete -o default -F __start_kubectl k
+    fi
     alias k=kubectl
     alias kgp='kubectl get pods'
     alias kga='kubectl get all'
