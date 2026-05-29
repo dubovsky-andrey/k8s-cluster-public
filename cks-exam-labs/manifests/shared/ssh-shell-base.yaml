@@ -8,7 +8,7 @@ data:
     if [ -f /usr/share/bash-completion/bash_completion ]; then
       . /usr/share/bash-completion/bash_completion
     fi
-    if command -v kubectl >/dev/null 2>&1; then
+    if command -v kubectl >/dev/null 2>&1 && type _get_comp_words_by_ref >/dev/null 2>&1; then
       source <(kubectl completion bash)
       complete -o default -F __start_kubectl k
     fi
