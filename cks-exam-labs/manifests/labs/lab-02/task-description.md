@@ -6,7 +6,7 @@ A pod has been created in the `omni` namespace, but it has a few issues that nee
 
 The pod has been created with more permissions than it needs. It also allows read access to the `/usr/share/nginx/html/internal` directory, making the Internal Site publicly accessible.
 
-Use the recommendations below to resolve this:
+Requirements:
 
 - use the AppArmor profile named `restricted-frontend` to restrict access to the internal site;
 - the profile file is prepared on the node at `/etc/apparmor.d/frontend`;
@@ -15,6 +15,6 @@ Use the recommendations below to resolve this:
 - do not create a new service account;
 - do not use the `default` service account.
 
-```bash
+Validate your answer:
+
 sh ~/val.sh
-```

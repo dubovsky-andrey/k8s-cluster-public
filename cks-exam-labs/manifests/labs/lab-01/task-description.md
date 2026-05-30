@@ -13,11 +13,6 @@ Requirements:
 - default network access must not allow all ingress and egress;
 - keep the web application reachable inside the namespace.
 
-Useful starting commands:
+Validate your answer:
 
-```bash
-kubectl get pods -A
-kubectl get all -n task-01
-kubectl get role,rolebinding -n task-01
-kubectl get networkpolicy -n task-01
-```
+sh ~/val.sh

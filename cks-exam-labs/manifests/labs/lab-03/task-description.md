@@ -10,22 +10,6 @@ Modify all containers in the Deployment so that they:
 - use a read-only root filesystem;
 - prevent privilege escalation.
 
-You can find the Deployment manifest file at:
-
-```bash
-~/sec-ns_deployment.yaml
-```
-
-Useful starting commands:
-
-```bash
-kubectl get deployment secdep -n sec-ns -o yaml
-vi ~/sec-ns_deployment.yaml
-kubectl apply -f ~/sec-ns_deployment.yaml
-```
-
 Validate your answer:
 
-```bash
 sh ~/val.sh
-```
