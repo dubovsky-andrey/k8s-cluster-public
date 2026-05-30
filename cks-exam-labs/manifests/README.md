@@ -12,8 +12,12 @@ Local workstation access is SSH-only:
 
 ```powershell
 ssh student@<HOST_IP> -p 32001
-cat ~/task.md
-kubectl get pods -A
+```
+
+The task text is printed automatically on SSH login. Inside the SSH session, validate with:
+
+```bash
+sh ~/val.sh
 ```
 
 Do not use local `vcluster connect` or local `kubectl config use-context` for this lab style.
@@ -89,6 +93,7 @@ cks-exam-labs/manifests/ACCESS.md
 lab-01 -> ssh student@<HOST_IP> -p 32001
 lab-02 -> ssh student@<HOST_IP> -p 32002
 lab-03 -> ssh student@<HOST_IP> -p 32003
+lab-04 -> ssh student@<HOST_IP> -p 32004
 ```
 
 ## Add A New Lab
