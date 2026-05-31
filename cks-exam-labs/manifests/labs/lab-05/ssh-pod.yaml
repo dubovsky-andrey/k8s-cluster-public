@@ -60,7 +60,6 @@ spec:
               install -m 644 -o student -g student /run/cks/bashrc /home/student/.bashrc
               install -d -m 755 -o student -g student /cks/docker
               install -m 644 -o student -g student /run/cks/Dockerfile /cks/docker/Dockerfile
-              install -m 644 -o student -g student /run/cks/deployment.yaml /cks/docker/deployment.yaml
               install -m 555 -o student -g student /run/cks/val.sh /home/student/val.sh
               exec /usr/sbin/sshd -D -e
           volumeMounts:
@@ -83,10 +82,6 @@ spec:
             - name: task
               mountPath: /run/cks/Dockerfile
               subPath: Dockerfile
-              readOnly: true
-            - name: task
-              mountPath: /run/cks/deployment.yaml
-              subPath: deployment.yaml
               readOnly: true
             - name: task
               mountPath: /run/cks/val.sh

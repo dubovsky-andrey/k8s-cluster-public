@@ -14,7 +14,6 @@ configMapGenerator:
       - task.md=task-description.md
       - task-manifests.yaml=task-manifests.yaml
       - Dockerfile=Dockerfile
-      - deployment.yaml=deployment.yaml
       - val.sh=val.sh
 generatorOptions:
   disableNameSuffixHash: true

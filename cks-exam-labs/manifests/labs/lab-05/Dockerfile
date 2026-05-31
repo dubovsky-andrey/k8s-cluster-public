@@ -1,17 +1,31 @@
-FROM ubuntu:22.04
+FROM ubuntu:latest
+
+ARG APP_VERSION=latest
+ENV NGINX_PORT=80
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
       ca-certificates \
       curl \
+      wget \
+      netcat-traditional \
+      telnet \
+      gcc \
+      make \
+      sudo \
       nginx && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /tmp/*
+
+ADD app.tar.gz /opt/app/
+
+RUN chmod 777 /opt/app && \
+    chmod 4777 /usr/bin/find
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /
 
-EXPOSE 8080
+EXPOSE 80
 
 USER root
 
