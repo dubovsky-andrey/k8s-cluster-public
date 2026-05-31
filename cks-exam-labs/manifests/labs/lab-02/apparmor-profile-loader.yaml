@@ -97,7 +97,7 @@ spec:
                 > /host/etc/apparmor.d/frontend
               printf '%s\n' 'Public Site' > /host/data/pages/index.html
               printf '%s\n' 'Internal Site' > /host/data/pages/internal/index.html
-              chroot /host /sbin/apparmor_parser -qr /etc/apparmor.d/frontend
+              chroot /host /sbin/apparmor_parser -qR /etc/apparmor.d/frontend 2>/dev/null || true
               sleep infinity
           resources:
             requests:
