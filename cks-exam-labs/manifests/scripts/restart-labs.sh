@@ -12,6 +12,7 @@ LABS=(
   05
   06
   07
+  08
 )
 
 # Add deployment names here if a lab gets more resettable deployments later.

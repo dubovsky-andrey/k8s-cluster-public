@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cks-lab-08
+resources:
+  - namespace.yaml
+  - ssh-authorized-key-secret.yaml
+  - ssh-shell-base.yaml
+  - common-rbac.yaml
+  - ssh-pod.yaml
+  - ssh-service.yaml
+configMapGenerator:
+  - name: cks-lab-08-task
+    files:
+      - task.txt=task-description.md
+      - task-manifests.yaml=task-manifests.yaml
+      - q3_file1.Dockerfile=q3_file1.Dockerfile
+      - q3_file2.yaml=q3_file2.yaml
+      - q3_file3.Dockerfile=q3_file3.Dockerfile
+      - q3_file4.yaml=q3_file4.yaml
+      - val.sh=val.sh
+generatorOptions:
+  disableNameSuffixHash: true

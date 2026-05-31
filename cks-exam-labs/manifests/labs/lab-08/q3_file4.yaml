@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: report-api
+  template:
+    metadata:
+      labels:
+        app: report-api
+    spec:
+      containers:
+        - name: api
+          image: registry.example.com/report-api:2.1
+          envFrom:
+            - secretRef:
+                name: report-api-config
+          resources: {}
