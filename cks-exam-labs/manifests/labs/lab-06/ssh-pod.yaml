@@ -61,7 +61,6 @@ spec:
               install -d -m 775 -o student -g student /var/lib/kubelet /etc/kubernetes/manifests /run/cks
               install -m 664 -o student -g student /run/cks/kubelet-config.yaml /var/lib/kubelet/config.yaml
               install -m 664 -o student -g student /run/cks/etcd.yaml /etc/kubernetes/manifests/etcd.yaml
-              install -m 555 -o student -g student /run/cks/kubelet-etcd.sh /home/student/kubelet-etcd.sh
               install -m 555 -o student -g student /run/cks/val.sh /home/student/val.sh
               install -m 555 -o root -g root /run/cks/systemctl-sim.sh /usr/local/bin/systemctl
               exec /usr/sbin/sshd -D -e
@@ -79,8 +78,8 @@ spec:
               subPath: config
               readOnly: true
             - name: task
-              mountPath: /home/student/task.md
-              subPath: task.md
+              mountPath: /home/student/task.txt
+              subPath: task.txt
               readOnly: true
             - name: task
               mountPath: /run/cks/kubelet-config.yaml
@@ -89,10 +88,6 @@ spec:
             - name: task
               mountPath: /run/cks/etcd.yaml
               subPath: etcd.yaml
-              readOnly: true
-            - name: task
-              mountPath: /run/cks/kubelet-etcd.sh
-              subPath: kubelet-etcd.sh
               readOnly: true
             - name: task
               mountPath: /run/cks/systemctl-sim.sh

@@ -18,7 +18,7 @@ Checked against the target model:
 | Each lab has own SSH pod | Done | `manifests/labs/*/ssh-pod.yaml` |
 | Each SSH pod mounts one kubeconfig | Done | `/home/student/.kube/config` from `vc-lab-XX` |
 | Each lab has own SSH port | Done | `32001`, `32002`, `32003` |
-| Task is mounted as `~/task.md` | Done | `manifests/labs/*/task-description.md` mounted through ConfigMap |
+| Task is mounted as `~/task.txt` | Done | `manifests/labs/*/task-description.md` mounted through ConfigMap |
 | Broken task env is created inside vCluster | Done | SSH pod initContainer runs `kubectl apply` with the lab kubeconfig |
 | Local laptop requires only SSH | Done by design | `ACCESS.md` |
 | Cluster skill has CKS lab policy | Done | `skills/references/cks-exam-lab-policy.md` |
@@ -34,7 +34,7 @@ These need a live sync or image build:
 | SSH pod starts | `kubectl -n cks-lab-01 get pod -l app.kubernetes.io/name=cks-shell` |
 | SSH access works | `ssh student@<HOST_IP> -p 32001` |
 | kubectl works inside SSH | `kubectl get pods -A` |
-| task file exists inside SSH | `cat ~/task.md` |
+| task file exists inside SSH | `cat ~/task.txt` |
 
 ## Known Bootstrap Requirements
 

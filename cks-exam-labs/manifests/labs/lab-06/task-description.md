@@ -17,12 +17,6 @@ Requirements:
 - reconfigure/restart services so the changed settings take effect;
 - keep the existing files in place.
 
-The initialization/reset script for this task is:
-
-```bash
-~/kubelet-etcd.sh
-```
-
 Validate your answer:
 
 sh ~/val.sh

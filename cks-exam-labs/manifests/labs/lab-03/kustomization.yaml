@@ -11,7 +11,7 @@ resources:
 configMapGenerator:
   - name: cks-lab-03-task
     files:
-      - task.md=task-description.md
+      - task.txt=task-description.md
       - task-manifests.yaml=task-manifests.yaml
       - sec-ns_deployment.yaml=sec-ns_deployment.yaml
       - val.sh=val.sh

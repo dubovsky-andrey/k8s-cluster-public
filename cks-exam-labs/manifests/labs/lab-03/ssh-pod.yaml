@@ -75,8 +75,8 @@ spec:
               subPath: config
               readOnly: true
             - name: task
-              mountPath: /home/student/task.md
-              subPath: task.md
+              mountPath: /home/student/task.txt
+              subPath: task.txt
               readOnly: true
             - name: task
               mountPath: /run/cks/sec-ns_deployment.yaml

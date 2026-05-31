@@ -16,7 +16,7 @@ Expected files:
 
 ```text
 /home/student/.kube/config
-/home/student/task.md
+/home/student/task.txt
 /home/student/val.sh
 ```
 

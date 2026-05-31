@@ -11,11 +11,10 @@ resources:
 configMapGenerator:
   - name: cks-lab-06-task
     files:
-      - task.md=task-description.md
+      - task.txt=task-description.md
       - task-manifests.yaml=task-manifests.yaml
       - kubelet-config.yaml=kubelet-config.yaml
       - etcd.yaml=etcd.yaml
-      - kubelet-etcd.sh=kubelet-etcd.sh
       - systemctl-sim.sh=systemctl-sim.sh
       - val.sh=val.sh
 generatorOptions:
