@@ -94,6 +94,7 @@ lab-01 -> ssh student@<HOST_IP> -p 32001
 lab-02 -> ssh student@<HOST_IP> -p 32002
 lab-03 -> ssh student@<HOST_IP> -p 32003
 lab-04 -> ssh student@<HOST_IP> -p 32004
+lab-05 -> ssh student@<HOST_IP> -p 32005
 ```
 
 ## Add A New Lab

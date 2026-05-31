@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-review
+  namespace: docker-review
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-review
+  template:
+    metadata:
+      labels:
+        app: docker-review
+    spec:
+      containers:
+        - name: web
+          image: docker-review:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 65535
+            allowPrivilegeEscalation: false
+            privileged: true
+          ports:
+            - containerPort: 8080

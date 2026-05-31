@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cks-shell-base
+data:
+  bashrc: |
+    export CKS_LAB_NAME=cks-lab-05
+    [ -f /etc/cks-shell/bashrc ] && . /etc/cks-shell/bashrc
