@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orion
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: a-safe-secret
+  namespace: orion
+type: Opaque
+stringData:
+  CONNECTOR_PASSWORD: S3cure-Orion-Connector!
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-xyz
+  namespace: orion
+  labels:
+    app: connector
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - sleep 1d
+      env:
+        - name: CONNECTOR_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: a-safe-secret
+              key: CONNECTOR_PASSWORD
+      resources: {}
