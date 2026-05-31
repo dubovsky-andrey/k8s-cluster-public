@@ -43,6 +43,8 @@ spec:
         - name: ssh
           image: ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04
           imagePullPolicy: Always
+          securityContext:
+            privileged: true
           ports:
             - name: ssh
               containerPort: 22
@@ -83,6 +85,8 @@ spec:
             - name: host-apparmor
               mountPath: /etc/apparmor.d
               readOnly: true
+            - name: host-securityfs
+              mountPath: /sys/kernel/security
           resources:
             requests:
               cpu: 50m
@@ -108,3 +112,7 @@ spec:
           hostPath:
             path: /etc/apparmor.d
             type: DirectoryOrCreate
+        - name: host-securityfs
+          hostPath:
+            path: /sys/kernel/security
+            type: Directory
