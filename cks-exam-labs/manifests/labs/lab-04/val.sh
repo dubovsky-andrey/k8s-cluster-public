@@ -80,9 +80,28 @@ fi
 
 secret_refs="$(get_deploy_jsonpath '{.spec.template.spec.volumes[*].secret.secretName}')"
 if printf ' %s ' "$secret_refs" | grep -q " $SECRET "; then
-  pass "Is the Deployment still configured to use the TLS Secret?"
+  pass "Is the Deployment configured to use the TLS Secret?"
 else
-  fail "Is the Deployment still configured to use the TLS Secret?"
+  fail "Is the Deployment configured to use the TLS Secret?"
+fi
+
+mount_count="$(
+  kubectl -n "$NS" get deployment "$DEPLOYMENT" -o json 2>/dev/null |
+  jq --arg secret "$SECRET" '
+    [.spec.template.spec.volumes[]?
+      | select(.secret.secretName == $secret)
+      | .name] as $tlsVolumes
+    | [.spec.template.spec.containers[]?
+      | select(.name == "web")
+      | .volumeMounts[]?
+      | select((.name as $name | $tlsVolumes | index($name)) and .mountPath == "/etc/nginx/tls")]
+    | length
+  ' 2>/dev/null || printf '0'
+)"
+if [ "$mount_count" -gt 0 ]; then
+  pass "Is the TLS Secret mounted into the web container?"
+else
+  fail "Is the TLS Secret mounted into the web container?"
 fi
 
 desired="$(get_deploy_jsonpath '{.spec.replicas}')"

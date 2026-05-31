@@ -49,17 +49,11 @@ spec:
             - name: nginx-conf
               mountPath: /etc/nginx/conf.d
               readOnly: true
-            - name: tls
-              mountPath: /etc/nginx/tls
-              readOnly: true
           resources: {}
       volumes:
         - name: nginx-conf
           configMap:
             name: clever-cactus-nginx
-        - name: tls
-          secret:
-            secretName: clever-cactus
 ---
 apiVersion: v1
 kind: Service
