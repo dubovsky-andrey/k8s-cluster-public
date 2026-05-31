@@ -69,3 +69,15 @@ Inside the SSH session:
 ```bash
 sh ~/val.sh
 ```
+
+## lab-06
+
+```powershell
+ssh student@<HOST_IP> -p 32006
+```
+
+Inside the SSH session:
+
+```bash
+sh ~/val.sh
+```

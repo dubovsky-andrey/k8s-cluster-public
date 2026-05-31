@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cks-lab-06
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2211"
+spec:
+  project: cks-exam-labs
+  source:
+    repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
+    path: cks-exam-labs/manifests/labs/lab-06
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cks-lab-06
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

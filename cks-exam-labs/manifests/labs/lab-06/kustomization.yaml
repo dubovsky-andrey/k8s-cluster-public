@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cks-lab-06
+resources:
+  - namespace.yaml
+  - ssh-authorized-key-secret.yaml
+  - ssh-shell-base.yaml
+  - common-rbac.yaml
+  - ssh-pod.yaml
+  - ssh-service.yaml
+configMapGenerator:
+  - name: cks-lab-06-task
+    files:
+      - task.md=task-description.md
+      - task-manifests.yaml=task-manifests.yaml
+      - kubelet-config.yaml=kubelet-config.yaml
+      - etcd.yaml=etcd.yaml
+      - kubelet-etcd.sh=kubelet-etcd.sh
+      - systemctl-sim.sh=systemctl-sim.sh
+      - val.sh=val.sh
+generatorOptions:
+  disableNameSuffixHash: true
