@@ -1,10 +1,11 @@
 #!/bin/sh
 set -u
 
-NS=orion
-POD=app-xyz
-SECRET=a-safe-secret
-PASSWORD_FILE=/root/CKS/secrets/CONNECTOR_PASSWORD
+KUBELET_SERVICE=/usr/lib/systemd/system/kubelet.service
+KUBELET_CONFIG=/var/lib/kubelet/config.yaml
+ETCD_DIR=/var/lib/etcd
+CONTROLLER_MANAGER=/etc/kubernetes/manifests/kube-controller-manager.yaml
+SCHEDULER=/etc/kubernetes/manifests/kube-scheduler.yaml
 
 failures=0
 
@@ -17,56 +18,58 @@ fail() {
   failures=$((failures + 1))
 }
 
-get_pod_jsonpath() {
-  kubectl -n "$NS" get pod "$POD" -o "jsonpath=$1" 2>/dev/null
+file_mode() {
+  stat -c '%a' "$1" 2>/dev/null || true
 }
 
-expected_password="$(
-  kubectl -n "$NS" get secret "$SECRET" -o jsonpath='{.data.CONNECTOR_PASSWORD}' 2>/dev/null |
-    base64 -d 2>/dev/null
-)"
+owner_group() {
+  stat -c '%U:%G' "$1" 2>/dev/null || true
+}
 
-if [ -n "$expected_password" ]; then
-  pass "Is the connector secret present?"
+require_file() {
+  if [ -f "$1" ]; then
+    pass "Is $1 present?"
+  else
+    fail "Is $1 present?"
+    return 1
+  fi
+}
+
+require_file "$KUBELET_SERVICE" || exit 1
+require_file "$KUBELET_CONFIG" || exit 1
+require_file "$CONTROLLER_MANAGER" || exit 1
+require_file "$SCHEDULER" || exit 1
+
+if [ "$(file_mode "$KUBELET_SERVICE")" = "600" ]; then
+  pass "Are kubelet service file permissions set to 600?"
 else
-  fail "Is the connector secret present?"
+  fail "Are kubelet service file permissions set to 600?"
 fi
 
-if [ -n "$expected_password" ] && [ -f "$PASSWORD_FILE" ] && [ "$(cat "$PASSWORD_FILE")" = "$expected_password" ]; then
-  pass "Is the decoded CONNECTOR_PASSWORD extracted to /root/CKS/secrets?"
+if [ "$(file_mode "$KUBELET_CONFIG")" = "600" ]; then
+  pass "Are kubelet config file permissions set to 600?"
 else
-  fail "Is the decoded CONNECTOR_PASSWORD extracted to /root/CKS/secrets?"
+  fail "Are kubelet config file permissions set to 600?"
 fi
 
-phase="$(get_pod_jsonpath '{.status.phase}')"
-if [ "$phase" = "Running" ]; then
-  pass "Is the app pod running?"
+if [ -d "$ETCD_DIR" ] && [ "$(owner_group "$ETCD_DIR")" = "etcd:etcd" ]; then
+  pass "Is the etcd data directory owned by etcd:etcd?"
 else
-  fail "Is the app pod running?"
+  fail "Is the etcd data directory owned by etcd:etcd?"
 fi
 
-env_count="$(
-  get_pod_jsonpath '{range .spec.containers[*].env[*]}{.name}{"\n"}{end}' |
-    awk '$1 == "CONNECTOR_PASSWORD" { count++ } END { print count + 0 }'
-)"
-if [ "$env_count" -eq 0 ]; then
-  pass "Is CONNECTOR_PASSWORD removed from environment variables?"
+if grep -Eq '^[[:space:]]*-[[:space:]]*--profiling=false([[:space:]]*)?$' "$CONTROLLER_MANAGER" \
+  && ! grep -Eq -- '--profiling=true' "$CONTROLLER_MANAGER"; then
+  pass "Is kube-controller-manager profiling disabled?"
 else
-  fail "Is CONNECTOR_PASSWORD removed from environment variables?"
+  fail "Is kube-controller-manager profiling disabled?"
 fi
 
-mount_count="$(
-  get_pod_jsonpath '{range .spec.containers[*].volumeMounts[*]}{.name}{"|"}{.mountPath}{"|"}{.readOnly}{"\n"}{end}' |
-    awk -F'|' '$2 == "/mnt/connector/password" && $3 == "true" { count++ } END { print count + 0 }'
-)"
-volume_count="$(
-  get_pod_jsonpath '{range .spec.volumes[*]}{.name}{"|"}{.secret.secretName}{"\n"}{end}' |
-    awk -F'|' -v secret="$SECRET" '$2 == secret { count++ } END { print count + 0 }'
-)"
-if [ "$mount_count" -gt 0 ] && [ "$volume_count" -gt 0 ]; then
-  pass "Is the secret mounted as a read-only volume at /mnt/connector/password?"
+if grep -Eq '^[[:space:]]*-[[:space:]]*--profiling=false([[:space:]]*)?$' "$SCHEDULER" \
+  && ! grep -Eq -- '--profiling=true' "$SCHEDULER"; then
+  pass "Is kube-scheduler profiling disabled?"
 else
-  fail "Is the secret mounted as a read-only volume at /mnt/connector/password?"
+  fail "Is kube-scheduler profiling disabled?"
 fi
 
 if [ "$failures" -eq 0 ]; then
