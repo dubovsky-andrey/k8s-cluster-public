@@ -17,39 +17,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cilium-operator
-  namespace: kube-system
-  labels:
-    k8s-app: cilium-operator
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      k8s-app: cilium-operator
-  template:
-    metadata:
-      labels:
-        k8s-app: cilium-operator
-    spec:
-      containers:
-        - name: cilium-operator
-          image: registry.k8s.io/pause:3.10
-          resources:
-            requests:
-              cpu: 10m
-              memory: 16Mi
-            limits:
-              cpu: 50m
-              memory: 64Mi
----
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
   name: cilium
   namespace: kube-system
   labels:
     k8s-app: cilium
 spec:
+  replicas: 1
   selector:
     matchLabels:
       k8s-app: cilium
@@ -68,25 +41,15 @@ spec:
             limits:
               cpu: 50m
               memory: 64Mi
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cilium-ingress-controller
-  namespace: kube-system
-  labels:
-    k8s-app: cilium-ingress-controller
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      k8s-app: cilium-ingress-controller
-  template:
-    metadata:
-      labels:
-        k8s-app: cilium-ingress-controller
-    spec:
-      containers:
+        - name: cilium-operator
+          image: registry.k8s.io/pause:3.10
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
         - name: cilium-ingress-controller
           image: registry.k8s.io/pause:3.10
           resources:

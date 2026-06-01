@@ -33,8 +33,7 @@ else
   fail "Is the Cilium Ingress class available?"
 fi
 
-if kubectl -n kube-system get pod -l k8s-app=cilium-ingress-controller 2>/dev/null | grep -q 'Running' \
-  && kubectl -n kube-system get pod -l k8s-app=cilium 2>/dev/null | grep -q 'Running'; then
+if kubectl -n kube-system get pod -l k8s-app=cilium 2>/dev/null | grep -q 'Running'; then
   pass "Are the Cilium lab components running?"
 else
   fail "Are the Cilium lab components running?"
