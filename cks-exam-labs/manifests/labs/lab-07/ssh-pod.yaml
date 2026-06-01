@@ -65,12 +65,13 @@ spec:
                 useradd -s /usr/sbin/nologin --system -g etcd etcd
               fi
               install -d -m 755 -o root -g root /usr/lib/systemd/system /var/lib/kubelet /etc/kubernetes/manifests /opt/kube-bench/cfg /var/lib/etcd
-              install -m 644 -o root -g root /opt/cks/lab-07/kubelet.service /usr/lib/systemd/system/kubelet.service
-              install -m 644 -o root -g root /opt/cks/lab-07/kubelet-config.yaml /var/lib/kubelet/config.yaml
-              install -m 644 -o root -g root /opt/cks/lab-07/kube-controller-manager.yaml /etc/kubernetes/manifests/kube-controller-manager.yaml
-              install -m 644 -o root -g root /opt/cks/lab-07/kube-scheduler.yaml /etc/kubernetes/manifests/kube-scheduler.yaml
+              install -m 644 -o root -g root /run/cks/kubelet.service /usr/lib/systemd/system/kubelet.service
+              install -m 644 -o root -g root /run/cks/kubelet-config.yaml /var/lib/kubelet/config.yaml
+              install -m 644 -o root -g root /run/cks/kube-controller-manager.yaml /etc/kubernetes/manifests/kube-controller-manager.yaml
+              install -m 644 -o root -g root /run/cks/kube-scheduler.yaml /etc/kubernetes/manifests/kube-scheduler.yaml
               chown -R root:root /var/lib/etcd
-              install -m 555 -o student -g student /opt/cks/lab-07/val.sh /home/student/val.sh
+              install -m 555 -o root -g root /run/cks/kube-bench-sim.sh /usr/local/bin/kube-bench
+              install -m 555 -o student -g student /run/cks/val.sh /home/student/val.sh
               exec /usr/sbin/sshd -D -e
           volumeMounts:
             - name: authorized-keys
@@ -88,6 +89,30 @@ spec:
             - name: task
               mountPath: /home/student/task.txt
               subPath: task.txt
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/kubelet.service
+              subPath: kubelet.service
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/kubelet-config.yaml
+              subPath: kubelet-config.yaml
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/kube-controller-manager.yaml
+              subPath: kube-controller-manager.yaml
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/kube-scheduler.yaml
+              subPath: kube-scheduler.yaml
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/kube-bench-sim.sh
+              subPath: kube-bench-sim.sh
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/val.sh
+              subPath: val.sh
               readOnly: true
           resources:
             requests:

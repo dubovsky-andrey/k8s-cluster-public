@@ -13,5 +13,11 @@ configMapGenerator:
     files:
       - task.txt=task-description.md
       - task-manifests.yaml=task-manifests.yaml
+      - kubelet.service=kubelet.service
+      - kubelet-config.yaml=kubelet-config.yaml
+      - kube-controller-manager.yaml=kube-controller-manager.yaml
+      - kube-scheduler.yaml=kube-scheduler.yaml
+      - kube-bench-sim.sh=kube-bench-sim.sh
+      - val.sh=val.sh
 generatorOptions:
   disableNameSuffixHash: true
