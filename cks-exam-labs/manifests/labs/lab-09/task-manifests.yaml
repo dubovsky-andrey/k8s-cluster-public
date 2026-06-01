@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: salad
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fruits
+  namespace: salad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fruits
+  template:
+    metadata:
+      labels:
+        app: fruits
+    spec:
+      containers:
+        - name: apple
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - sleep 365d
+        - name: banana
+          image: curlimages/curl:8.10.1
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - sleep 365d
+        - name: kiwi
+          image: alpine:3.19
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - sleep 365d
