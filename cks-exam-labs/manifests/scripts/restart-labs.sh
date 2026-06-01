@@ -71,21 +71,33 @@ restart_resource() {
     sed "s/^/[${namespace}] /"
 }
 
-restart_namespace() {
+resource_exists() {
   local namespace="$1"
+  local resource="$2"
+
+  kubectl -n "$namespace" get "$resource" >/dev/null 2>&1
+}
+
+restart_remaining_resources() {
+  local namespace="$1"
+  local vcluster_resource="$2"
+  local shell_resource="$3"
   local kind resource
   local found=false
 
   for kind in "${ROLLOUT_RESOURCES[@]}"; do
     while IFS= read -r resource; do
       [ -n "$resource" ] || continue
+      if [ "$resource" = "$vcluster_resource" ] || [ "$resource" = "$shell_resource" ]; then
+        continue
+      fi
       found=true
       restart_resource "$namespace" "$resource"
     done < <(kubectl -n "$namespace" get "$kind" -o name 2>/dev/null || true)
   done
 
   if [ "$found" = "false" ]; then
-    printf '[%s] no rollout resources found\n' "$namespace"
+    printf '[%s] no intermediate rollout resources found\n' "$namespace"
   fi
 }
 
@@ -98,9 +110,25 @@ wait_for_slot() {
 restart_lab() {
   local lab="$1"
   local namespace="cks-lab-${lab}"
+  local vcluster_resource="deployment/lab-${lab}"
+  local shell_resource="deployment/cks-shell"
 
   printf '\n== lab-%s rollout start ==\n' "$lab"
-  restart_namespace "$namespace"
+
+  if resource_exists "$namespace" "$vcluster_resource"; then
+    restart_resource "$namespace" "$vcluster_resource"
+  else
+    printf '[%s] %s not found; skipping vCluster-first step\n' "$namespace" "$vcluster_resource"
+  fi
+
+  restart_remaining_resources "$namespace" "$vcluster_resource" "$shell_resource"
+
+  if resource_exists "$namespace" "$shell_resource"; then
+    restart_resource "$namespace" "$shell_resource"
+  else
+    printf '[%s] %s not found; skipping shell-last step\n' "$namespace" "$shell_resource"
+  fi
+
   printf '== lab-%s rollout done ==\n' "$lab"
 }
 
