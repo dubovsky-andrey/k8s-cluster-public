@@ -1,117 +1,83 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: omni
+  name: web
   labels:
-    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: restricted
     pod-security.kubernetes.io/warn: restricted
 ---
-apiVersion: v1
-kind: ServiceAccount
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
 metadata:
-  name: frontend-default
-  namespace: omni
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: frontend
-  namespace: omni
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: fe
-  namespace: omni
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: frontend
-  namespace: omni
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - secrets
-    verbs:
-      - create
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: fe
-  namespace: omni
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - configmaps
-      - secrets
-    verbs:
-      - create
-      - delete
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: frontend
-  namespace: omni
-subjects:
-  - kind: ServiceAccount
-    name: frontend
-    namespace: omni
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: frontend
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: fe
-  namespace: omni
-subjects:
-  - kind: ServiceAccount
-    name: fe
-    namespace: omni
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: fe
----
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    run: nginx
-  name: frontend-site
-  namespace: omni
+  name: cilium
 spec:
-  serviceAccountName: fe
-  containers:
-    - image: nginx:alpine
-      name: nginx
-      volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: test-volume
-      resources: {}
-  volumes:
-    - name: test-volume
-      hostPath:
-        path: /data/pages
-        type: Directory
+  controller: io.cilium/ingress-controller
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-site-nginx
+  namespace: web
+data:
+  default.conf: |
+    server {
+      listen 8080;
+      server_name _;
+
+      location / {
+        add_header Content-Type text/plain;
+        return 200 "web-site: ready\n";
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-site
+  namespace: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: web-site
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: web-site
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+              readOnly: true
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: web-site-nginx
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-site
-  namespace: omni
+  name: web-site
+  namespace: web
 spec:
   selector:
-    run: nginx
+    app.kubernetes.io/name: web-site
   ports:
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: 8080

@@ -29,6 +29,8 @@ sync:
   toHost:
     pods:
       enabled: true
+    ingresses:
+      enabled: true
     services:
       enabled: true
     secrets:

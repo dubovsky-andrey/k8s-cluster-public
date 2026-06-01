@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: cks-lab-02
 resources:
   - namespace.yaml
-  - apparmor-profile-loader.yaml
   - ssh-authorized-key-secret.yaml
   - ssh-shell-base.yaml
   - common-rbac.yaml

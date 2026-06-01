@@ -1,19 +1,22 @@
-# Task 02: Restrict frontend access with AppArmor and least privilege
+# Task 02: Expose a web service with Cilium Ingress
 
 You are connected to the `lab-02` Kubernetes cluster.
 
-A pod has been created in the `omni` namespace, but it has a few issues that need to be addressed.
+The cluster uses Cilium for Ingress. A web application is already running in the `web` namespace.
 
-The pod has been created with more permissions than it needs. It also allows read access to the `/usr/share/nginx/html/internal` directory, making the Internal Site publicly accessible.
+The application container listens on port `8080`. The Service named `web-site` exposes it on port `80`.
 
 Requirements:
 
-- use the AppArmor profile named `restricted-frontend` to restrict access to the internal site;
-- the profile file is prepared on the node at `/etc/apparmor.d/frontend`;
-- apply the principle of least privilege and use the service account with the minimum privileges, excluding the `default` service account;
-- once the pod is recreated with the correct service account, delete the other unused service accounts in the `omni` namespace, excluding the `default` service account;
-- do not create a new service account;
-- do not use the `default` service account.
+- create an Ingress named `web-site` in the `web` namespace;
+- use the Cilium Ingress class named `cilium`;
+- route requests for host `web.site.local` and path `/` to Service `web-site` on port `80`;
+- create a TLS Secret named `web-site-tls` in the `web` namespace using:
+  - certificate: `/home/student/tls/web.site.local.crt`;
+  - private key: `/home/student/tls/web.site.local.key`;
+- configure the Ingress for TLS termination for host `web.site.local`;
+- redirect HTTP requests to HTTPS;
+- do not enable TLS passthrough.
 
 Validate your answer:
 

@@ -60,6 +60,18 @@ spec:
               install -d -m 700 -o student -g student /home/student/.ssh
               install -m 600 -o student -g student /run/cks/authorized_keys /home/student/.ssh/authorized_keys
               install -m 644 -o student -g student /run/cks/bashrc /home/student/.bashrc
+              install -d -m 755 -o student -g student /home/student/tls
+              if [ ! -f /home/student/tls/web.site.local.crt ] || [ ! -f /home/student/tls/web.site.local.key ]; then
+                openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
+                  -subj /CN=web.site.local \
+                  -addext subjectAltName=DNS:web.site.local \
+                  -keyout /home/student/tls/web.site.local.key \
+                  -out /home/student/tls/web.site.local.crt >/dev/null 2>&1
+              fi
+              chown -R student:student /home/student/tls
+              chmod 644 /home/student/tls/web.site.local.crt
+              chmod 600 /home/student/tls/web.site.local.key
+              install -m 555 -o student -g student /run/cks/val.sh /home/student/val.sh
               exec /usr/sbin/sshd -D -e
           volumeMounts:
             - name: authorized-keys
@@ -79,14 +91,9 @@ spec:
               subPath: task.txt
               readOnly: true
             - name: task
-              mountPath: /home/student/val.sh
+              mountPath: /run/cks/val.sh
               subPath: val.sh
               readOnly: true
-            - name: host-apparmor
-              mountPath: /etc/apparmor.d
-              readOnly: true
-            - name: host-securityfs
-              mountPath: /sys/kernel/security
           resources:
             requests:
               cpu: 50m
@@ -108,11 +115,3 @@ spec:
           configMap:
             name: cks-lab-02-task
             defaultMode: 0555
-        - name: host-apparmor
-          hostPath:
-            path: /etc/apparmor.d
-            type: DirectoryOrCreate
-        - name: host-securityfs
-          hostPath:
-            path: /sys/kernel/security
-            type: Directory
