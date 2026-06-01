@@ -33,6 +33,13 @@ else
   fail "Is the Cilium Ingress class available?"
 fi
 
+if kubectl -n kube-system get pod -l k8s-app=cilium-ingress-controller 2>/dev/null | grep -q 'Running' \
+  && kubectl -n kube-system get pod -l k8s-app=cilium 2>/dev/null | grep -q 'Running'; then
+  pass "Are the Cilium lab components running?"
+else
+  fail "Are the Cilium lab components running?"
+fi
+
 ready_replicas="$(kubectl -n "$NS" get deploy "$SERVICE" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || true)"
 if [ "$ready_replicas" = "1" ]; then
   pass "Is the web Deployment ready?"
