@@ -47,6 +47,13 @@ fi
 
 profile_type="$(get_jsonpath '{.spec.securityContext.appArmorProfile.type}')"
 profile_name="$(get_jsonpath '{.spec.securityContext.appArmorProfile.localhostProfile}')"
+
+if sudo aa-status 2>/dev/null | grep -Fxq "   $EXPECTED_PROFILE"; then
+  pass "Is the AppArmor profile loaded?"
+else
+  fail "Is the AppArmor profile loaded?"
+fi
+
 obsolete_deleted=true
 for unused_sa in frontend fe; do
   if kubectl -n "$NS" get sa "$unused_sa" >/dev/null 2>&1; then
