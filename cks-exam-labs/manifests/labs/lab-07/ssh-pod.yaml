@@ -41,7 +41,7 @@ spec:
               readOnly: true
       containers:
         - name: ssh
-          image: ghcr.io/dubovsky-andrey/k8s-ubuntu-cks-lab-07:24.04
+          image: ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04
           imagePullPolicy: Always
           ports:
             - name: ssh
