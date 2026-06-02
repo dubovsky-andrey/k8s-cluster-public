@@ -14,52 +14,6 @@ metadata:
 spec:
   controller: io.cilium/ingress-controller
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cilium
-  namespace: kube-system
-  labels:
-    k8s-app: cilium
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      k8s-app: cilium
-  template:
-    metadata:
-      labels:
-        k8s-app: cilium
-    spec:
-      containers:
-        - name: cilium-agent
-          image: registry.k8s.io/pause:3.10
-          resources:
-            requests:
-              cpu: 10m
-              memory: 16Mi
-            limits:
-              cpu: 50m
-              memory: 64Mi
-        - name: cilium-operator
-          image: registry.k8s.io/pause:3.10
-          resources:
-            requests:
-              cpu: 10m
-              memory: 16Mi
-            limits:
-              cpu: 50m
-              memory: 64Mi
-        - name: cilium-ingress-controller
-          image: registry.k8s.io/pause:3.10
-          resources:
-            requests:
-              cpu: 10m
-              memory: 16Mi
-            limits:
-              cpu: 50m
-              memory: 64Mi
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
