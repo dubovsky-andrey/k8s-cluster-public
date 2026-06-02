@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cks-lab-11
+resources:
+  - namespace.yaml
+  - ssh-authorized-key-secret.yaml
+  - ssh-shell-base.yaml
+  - common-rbac.yaml
+  - ssh-pod.yaml
+  - ssh-service.yaml
+configMapGenerator:
+  - name: cks-lab-11-task
+    files:
+      - task.txt=task-description.md
+      - task-manifests.yaml=task-manifests.yaml
+      - val.sh=val.sh
+generatorOptions:
+  disableNameSuffixHash: true
