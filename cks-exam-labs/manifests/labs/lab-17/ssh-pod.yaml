@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cks-shell
+  labels:
+    app.kubernetes.io/name: cks-shell
+    app.kubernetes.io/part-of: cks-lab-17
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cks-shell
+      app.kubernetes.io/part-of: cks-lab-17
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cks-shell
+        app.kubernetes.io/part-of: cks-lab-17
+    spec:
+      serviceAccountName: cks-shell
+      automountServiceAccountToken: false
+      initContainers:
+        - name: bootstrap-task
+          image: bitnami/kubectl:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -ec
+            - kubectl apply -f /opt/cks/task-manifests.yaml
+          env:
+            - name: KUBECONFIG
+              value: /home/student/.kube/config
+          volumeMounts:
+            - name: vcluster-kubeconfig
+              mountPath: /home/student/.kube/config
+              subPath: config
+              readOnly: true
+            - name: task
+              mountPath: /opt/cks/task-manifests.yaml
+              subPath: task-manifests.yaml
+              readOnly: true
+      containers:
+        - name: ssh
+          image: ghcr.io/dubovsky-andrey/k8s-ubuntu:24.04
+          imagePullPolicy: Always
+          ports:
+            - name: ssh
+              containerPort: 22
+          env:
+            - name: CKS_LAB_NAME
+              value: cks-lab-17
+            - name: KUBECONFIG
+              value: /home/student/.kube/config
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              install -d -m 700 -o student -g student /home/student/.ssh
+              install -m 600 -o student -g student /run/cks/authorized_keys /home/student/.ssh/authorized_keys
+              install -m 644 -o student -g student /run/cks/bashrc /home/student/.bashrc
+              install -d -m 775 -o student -g student /etc/falco /run/cks/devmem-state
+              install -m 664 -o student -g student /run/cks/falco_rules.local.yaml /etc/falco/falco_rules.local.yaml
+              install -m 555 -o root -g root /run/cks/kubectl-sim.sh /usr/local/bin/kubectl
+              install -m 555 -o root -g root /run/cks/falco-sim.sh /usr/local/bin/falco
+              install -m 555 -o root -g root /run/cks/crictl-sim.sh /usr/local/bin/crictl
+              install -m 555 -o student -g student /run/cks/val.sh /home/student/val.sh
+              exec /usr/sbin/sshd -D -e
+          volumeMounts:
+            - name: authorized-keys
+              mountPath: /run/cks/authorized_keys
+              subPath: authorized_keys
+              readOnly: true
+            - name: shell-base
+              mountPath: /run/cks/bashrc
+              subPath: bashrc
+              readOnly: true
+            - name: vcluster-kubeconfig
+              mountPath: /home/student/.kube/config
+              subPath: config
+              readOnly: true
+            - name: task
+              mountPath: /home/student/task.txt
+              subPath: task.txt
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/falco_rules.local.yaml
+              subPath: falco_rules.local.yaml
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/kubectl-sim.sh
+              subPath: kubectl-sim.sh
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/falco-sim.sh
+              subPath: falco-sim.sh
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/crictl-sim.sh
+              subPath: crictl-sim.sh
+              readOnly: true
+            - name: task
+              mountPath: /run/cks/val.sh
+              subPath: val.sh
+              readOnly: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: authorized-keys
+          secret:
+            secretName: cks-shared-ssh-authorized-keys
+        - name: shell-base
+          configMap:
+            name: cks-shell-base
+        - name: vcluster-kubeconfig
+          secret:
+            secretName: vc-lab-17
+        - name: task
+          configMap:
+            name: cks-lab-17-task
