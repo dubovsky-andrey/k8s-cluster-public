@@ -1,0 +1,13 @@
+- rule: Write below binary dir
+  desc: an attempt to write to any file below a set of binary directories
+  condition: >
+    bin_dir and evt.dir = < and open_write
+    and not package_mgmt_procs
+    and not exe_running_docker_save
+    and not python_running_get_pip
+    and not python_running_ms_oms
+    and not user_known_write_below_binary_dir_activities
+  output: >
+    File below a known binary directory opened for writing (user=%user.name file=%fd.name command=%proc.cmdline)
+  priority: WARNING
+  tags: [filesystem, mitre_persistence]
