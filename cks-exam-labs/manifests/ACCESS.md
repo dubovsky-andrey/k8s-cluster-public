@@ -177,3 +177,15 @@ Inside the SSH session:
 ```bash
 sh ~/val.sh
 ```
+
+## lab-15
+
+```bash
+ssh student@<HOST_IP> -p 32015
+```
+
+Inside the SSH session:
+
+```bash
+sh ~/val.sh
+```
