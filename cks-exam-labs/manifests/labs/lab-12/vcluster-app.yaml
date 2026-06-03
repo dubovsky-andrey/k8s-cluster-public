@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cks-lab-12-vcluster
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2222"
+spec:
+  project: cks-exam-labs
+  sources:
+    - repoURL: https://charts.loft.sh
+      chart: vcluster
+      targetRevision: 0.34.0
+      helm:
+        releaseName: lab-12
+        valueFiles:
+          - $values/cks-exam-labs/manifests/labs/lab-12/vcluster-values.yaml
+    - repoURL: https://github.com/dubovsky-andrey/k8s-cluster-public.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cks-lab-12
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
