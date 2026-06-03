@@ -39,7 +39,7 @@ cmd_kubectl() {
   case "${1:-}" in
     get)
       case "${2:-}" in
-        nodes|node)
+        nodes|node|no)
           if [ "${3:-}" = "worker-1" ]; then
             node_line worker-1
           else
@@ -47,6 +47,9 @@ cmd_kubectl() {
             node_line master-1
             node_line worker-1
           fi
+          ;;
+        pods|pod|po)
+          pod_lines "$@"
           ;;
         *)
           printf 'kubectl get: unsupported resource: %s\n' "${2:-}" >&2
@@ -93,6 +96,27 @@ node_line() {
   [ "$(read_state ready)" = "true" ] || status=NotReady
   [ "$(read_state schedulable)" = "true" ] || status="${status},SchedulingDisabled"
   printf 'worker-1   %-25s <none>          42d   %s\n' "$status" "$(read_state worker_version)"
+}
+
+pod_lines() {
+  all_namespaces=false
+  for arg in "$@"; do
+    [ "$arg" = "-A" ] || [ "$arg" = "--all-namespaces" ] && all_namespaces=true
+  done
+
+  if [ "$all_namespaces" = "true" ]; then
+    printf 'NAMESPACE     NAME                                READY   STATUS    RESTARTS   AGE\n'
+    printf 'kube-system   coredns-6f6b679f8f-mhz7x           1/1     Running   0          42d\n'
+    printf 'kube-system   coredns-6f6b679f8f-xvk2r           1/1     Running   0          42d\n'
+    printf 'kube-system   etcd-master-1                      1/1     Running   0          42d\n'
+    printf 'kube-system   kube-apiserver-master-1            1/1     Running   0          42d\n'
+    printf 'kube-system   kube-controller-manager-master-1   1/1     Running   0          42d\n'
+    printf 'kube-system   kube-proxy-4f8k9                   1/1     Running   0          42d\n'
+    printf 'kube-system   kube-proxy-cj7mz                   1/1     Running   0          42d\n'
+    printf 'kube-system   kube-scheduler-master-1            1/1     Running   0          42d\n'
+  else
+    printf 'No resources found in default namespace.\n'
+  fi
 }
 
 cmd_apt_mark() {
