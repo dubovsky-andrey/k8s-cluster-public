@@ -103,6 +103,7 @@ lab-10 -> ssh student@<HOST_IP> -p 32010
 lab-11 -> ssh student@<HOST_IP> -p 32011
 lab-12 -> ssh student@<HOST_IP> -p 32012
 lab-13 -> ssh student@<HOST_IP> -p 32013
+lab-14 -> ssh student@<HOST_IP> -p 32014
 ```
 
 ## Add A New Lab
