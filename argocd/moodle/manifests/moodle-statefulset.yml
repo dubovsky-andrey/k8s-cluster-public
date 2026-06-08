@@ -37,6 +37,8 @@ spec:
         envFrom:
         - configMapRef:
             name: moodle-config
+        - secretRef:
+            name: moodle-credentials
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false

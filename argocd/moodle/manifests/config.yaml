@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-config
+  namespace: moodle
+data:
+  MARIADB_DATABASE: moodle
+  MARIADB_USER: moodle_user
+  MARIADB_CHARACTER_SET: utf8mb4
+  MARIADB_COLLATE: utf8mb4_unicode_ci
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: moodle-config
+  namespace: moodle
+data:
+  MOODLE_DATABASE_HOST: mariadb.moodle.svc.cluster.local
+  MOODLE_DATABASE_PORT_NUMBER: "3306"
+  MOODLE_DATABASE_NAME: moodle
+  MOODLE_DATABASE_USER: moodle_user
+  MOODLE_USERNAME: admin
+  MOODLE_EMAIL: admin@example.com
+  BITNAMI_DEBUG: "true"
+  MOODLE_SKIP_BOOTSTRAP_PERMISSIONS: "yes"

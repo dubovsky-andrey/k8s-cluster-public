@@ -57,6 +57,8 @@ spec:
         envFrom:
         - configMapRef:
             name: mariadb-config
+        - secretRef:
+            name: moodle-credentials
         volumeMounts:
         - name: mariadb-storage
           mountPath: /bitnami/mariadb
